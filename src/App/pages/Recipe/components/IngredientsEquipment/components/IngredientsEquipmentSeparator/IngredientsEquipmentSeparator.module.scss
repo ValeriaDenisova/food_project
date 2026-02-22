@@ -1,0 +1,27 @@
+@import 'styles/variables.scss';
+
+.separatop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-right: 49px;
+}
+
+.circle {
+  border-radius: 50%;
+  width: 7px;
+  height: 7px;
+  background: $default-color;
+}
+
+.line {
+  border: 1px solid #b5460f;
+  flex: 1;
+}
+
+@media (max-width: 768px) {
+  .separatop {
+    display: none;
+  }
+}

@@ -1,0 +1,50 @@
+@import 'styles/variables.scss';
+
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 15px;
+}
+
+.pagination_number {
+  display: flex;
+}
+
+.numberPages {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 38px;
+  height: 42px;
+  border: 1.5px solid #f7e8d7;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  color: #000000;
+}
+
+.active {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 38px;
+  height: 42px;
+  background: $default-color;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 22px;
+  color: #ffffff;
+  flex: none;
+  order: 0;
+  flex-grow: 1;
+}
+@media (max-width: 165px) {
+  .pagination {
+    display: none;
+  }
+}

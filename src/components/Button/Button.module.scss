@@ -1,0 +1,31 @@
+@import '../../styles/variables.scss';
+
+.button {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  padding: 17px 20px;
+  gap: 8px;
+  background: $default-color;
+  border-radius: 0px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 18px;
+  line-height: 18px;
+  border: none;
+  color: #ffffff;
+  border-radius: $border-radius;
+}
+
+.button_hover:hover {
+  background: $button-hover;
+}
+
+.button_disabled:disabled {
+  background: $button-disabled;
+}
+
+.button:active {
+  background: $button-active;
+}

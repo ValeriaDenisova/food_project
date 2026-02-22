@@ -1,0 +1,70 @@
+@import '../../styles/variables.scss';
+
+.inputContainer {
+  display: flex;
+  align-items: center;
+  border-radius: 4px;
+  width: fit-content;
+  box-sizing: border-box;
+  padding: 14px 12px;
+  gap: 8px;
+  width: 350px;
+  height: 52px;
+  background: #ffffff;
+  border: 1px solid #ffffff;
+  border-radius: $border-radius;
+}
+
+.input {
+  border: none;
+  outline: none;
+  flex: 1;
+  min-width: 200px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  color: #000000;
+}
+
+input::placeholder {
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  color: $color-placeholder;
+}
+
+.afterSlot {
+  margin-left: 8px;
+}
+
+.inputContainer.disabled {
+  width: 368px;
+}
+
+.inputContainer input:disabled {
+  font-family: 'Roboto';
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
+  color: rgba(0, 0, 0, 0.2);
+  background: #ffffff;
+  border: 1px solid #ffffff;
+}
+
+.inputContainer:focus-within {
+  background: #ffffff;
+  border: 1px solid $default-color;
+}
+
+@media (max-width: 375px) {
+  .inputContainer {
+    width: 100%;
+  }
+
+  .afterSlot {
+    display: none;
+  }
+}

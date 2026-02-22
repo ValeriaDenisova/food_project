@@ -1,0 +1,32 @@
+.contant {
+  display: grid;
+  grid-template-columns: auto auto;
+  row-gap: 10px;
+  column-gap: 20px;
+}
+
+.ingredientsContainer {
+  width: auto;
+
+  @media (max-width: 768px) {
+    width: 100% !important;
+  }
+}
+
+@media (max-width: 1024px) {
+  .contant {
+    grid-template-columns: auto auto;
+  }
+}
+
+@media (max-width: 768px) {
+  .contant {
+    grid-template-columns: auto auto;
+  }
+}
+
+@media (max-width: 375px) {
+  .contant {
+    grid-template-columns: auto;
+  }
+}

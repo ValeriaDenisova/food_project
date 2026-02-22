@@ -1,0 +1,7 @@
+@import 'styles/variables.scss';
+
+.recipes {
+  display: flex;
+  flex-direction: column;
+  gap: $flex-gap;
+}

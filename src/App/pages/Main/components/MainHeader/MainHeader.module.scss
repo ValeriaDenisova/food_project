@@ -1,0 +1,37 @@
+.MainHeader {
+  width: 100%;
+  height: 572px;
+  background-color: rgb(202, 123, 123);
+  position: relative;
+}
+
+.title {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 20px;
+}
+
+.MainHeader img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 768px) {
+  .MainHeader {
+    height: 400px;
+  }
+}
+
+@media (max-width: 375px) {
+  .title svg {
+    width: 100%;
+    height: auto;
+    display: block;
+  }
+
+  .MainHeader {
+    height: 200px;
+  }
+}

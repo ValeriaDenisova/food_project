@@ -6,11 +6,9 @@
       "components": ["components/*"],
       "config": ["config/*"],
       "styles": ["styles/*"],
+      "hooks": ["hooks/*"],
       "utils": ["utils/*"]
     }
   },
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
-  ]
+  "references": [{ "path": "./tsconfig.app.json" }, { "path": "./tsconfig.node.json" }]
 }
