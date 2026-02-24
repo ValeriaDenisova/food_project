@@ -1,0 +1,25 @@
+@use 'styles/variables.scss' as *;
+@use 'styles/mixins' as *;
+
+.ProductsElements {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  row-gap: 64px;
+  column-gap: 80px;
+
+  @include respondToMedium{
+    grid-template-columns: 1fr 1fr;
+    row-gap: 48px;
+    column-gap: 40px;
+  }
+
+  @include respondToSmall{
+    grid-template-columns: 1fr;
+    column-gap: 30px;
+  }
+}
+
+.slot {
+  color: $default-color;
+}
+

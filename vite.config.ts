@@ -10,9 +10,7 @@ const parseTsConfigPaths = (paths: Record<string, string[]>): Record<string, str
   const aliases: Record<string, string> = {};
 
   Object.entries(paths || {}).forEach(([alias, targetPaths]) => {
-    const aliasPath = targetPaths[0]
-      .replace(/\/\*$/, '')
-      .replace(/^\/*/, '');
+    const aliasPath = targetPaths[0].replace(/\/\*$/, '').replace(/^\/*/, '');
 
     aliases[alias] = path.join(SRC_PATH, aliasPath);
   });
