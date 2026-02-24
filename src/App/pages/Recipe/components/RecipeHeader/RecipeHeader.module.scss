@@ -1,41 +1,32 @@
+@use 'styles/variables.scss' as *;
+@use 'styles/mixins' as *;
+
 .resipeHeader {
-  display: flex;
-  align-items: center;
+  @include displayFlexAlignCenter;
   gap: 16px;
   margin-bottom: 37px;
 }
 
 .title {
-  font-style: normal;
-  font-weight: 700;
-  font-size: 44px;
-  line-height: 48px;
-  color: #000000;
-}
+  @include normal700;
+  @include fz44;
+  color: $color-black;
 
-@media (max-width: 768px) {
-  .title {
-    font-size: 32px;
-    line-height: 36px;
+  @include respondToMedium{
+    @include fz32;
+  }
+
+  @include respondToExtraSmall {
+    @include fz28;
+  }
+
+ @include respondTo250 {
+     @include fz20;
   }
 }
 
-@media (max-width: 375px) {
-  .title {
-    font-size: 28px;
-    line-height: 32px;
-  }
+
+.back{
+  @include respondToNone155;
 }
 
-@media (max-width: 250px) {
-  .title {
-    font-size: 20px;
-    line-height: 22px;
-  }
-}
-
-@media (max-width: 155px) {
-  .back {
-    display: none;
-  }
-}

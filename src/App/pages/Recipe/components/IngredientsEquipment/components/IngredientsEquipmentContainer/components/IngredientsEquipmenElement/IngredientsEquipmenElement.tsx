@@ -1,6 +1,6 @@
 import React from 'react';
-import styles from './IngredientsEquipmenElement.module.scss';
-import Text from '../../../../../../../../components/Text';
+import Text from 'components/Text';
+import s from './IngredientsEquipmenElement.module.scss';
 
 interface IngredientsEquipmentElementProps {
   svg: React.ReactNode;
@@ -9,11 +9,11 @@ interface IngredientsEquipmentElementProps {
 
 const IngredientsEquipmentElement: React.FC<IngredientsEquipmentElementProps> = ({ svg, text }) => {
   return (
-    <div className={styles.ingredientsEquipmentElement}>
+    <div className={s.ingredientsEquipmentElement}>
       {svg}
       <Text>{text}</Text>
     </div>
   );
 };
 
-export default IngredientsEquipmentElement;
+export default React.memo(IngredientsEquipmentElement);

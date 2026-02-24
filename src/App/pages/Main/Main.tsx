@@ -1,8 +1,8 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useProducts } from 'hooks/useProducts/useProducts';
 import MainHeader from './components/MainHeader';
 import Recipes from './components/Recipes';
-import styles from './Main.module.scss';
+import s from './Main.module.scss';
 
 const PAGE_SIZE: number = 9;
 
@@ -18,7 +18,7 @@ const Main: React.FC = () => {
     <>
       <MainHeader />
       <div className="wrapper">
-        <div className={styles.main}>
+        <div className={s.main}>
           <Recipes
             numberStarlings={totalPage ? totalPage : 1}
             page={page}
@@ -31,4 +31,4 @@ const Main: React.FC = () => {
   );
 };
 
-export default Main;
+export default React.memo(Main);

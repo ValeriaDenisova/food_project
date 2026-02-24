@@ -1,27 +1,29 @@
+@use 'styles/mixins' as *;
+
 .search {
   display: grid;
   grid-template-columns: 1fr 64px;
   gap: 19px;
   margin-bottom: 20px;
-}
 
-.category {
-  display: flex;
-  justify-content: flex-end;
-}
-
-@media (max-width: 375px) {
-  .category {
-    display: block;
-  }
-  .search {
+  @include respondToExtraSmall{
     width: 98%;
     grid-template-columns: 1fr;
   }
 }
 
-@media (max-width: 250px) {
-  .filter {
+.category {
+  display: flex;
+  justify-content: flex-end;
+
+  @include respondToExtraSmall{
+    display: block;
+  }
+}
+
+
+.filter{
+ @include respondTo250{
     display: none;
   }
 }

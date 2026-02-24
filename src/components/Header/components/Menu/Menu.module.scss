@@ -1,28 +1,43 @@
-.menu_li {
-  font-style: normal;
-  font-weight: 400;
-  font-size: 16px;
-  line-height: 20px;
-  color: #000000;
+@use 'styles/variables.scss' as *;
+@use 'styles/mixins' as *;
+
+.menu__li {
+  @include normal400-fz16;
+  color: $color-black;
 }
 
-.menu_li__active {
-  color: #b5460f;
+.menu_li_active {
+  color: $default-color;
 }
 
 .menu {
   display: flex;
   gap: 16px;
-}
 
-@media (max-width: 1024px) {
-  .menu {
+  @include respondToMedium{
     gap: 10px;
   }
+
+ @include respondToNoneSmall;
 }
 
-@media (max-width: 768px) {
-  .menu {
-    display: none;
+.menu__mobile{
+  @include respondToSmall{
+    background-color: $color-header-menu;
+    position: fixed;
+    width: 100vw;
+    top: 64px;
+    left: 0px;
+    padding-bottom: 40px;
+    gap: 20px;
+  }
+
+}
+
+.menu__open{
+   @include respondToSmall{
+    @include flexColumnCenter;
   }
 }
+
+

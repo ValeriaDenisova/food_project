@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react';
-import styles from './CheckBox.module.scss';
-import CheckIcon from '../icons/CheckIcon';
+import CheckIcon from '../Icons/CheckIcon';
+import s from './CheckBox.module.scss';
 
 export type CheckBoxProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onChange'> & {
   onChange: (checked: boolean) => void;
@@ -15,28 +15,28 @@ const CheckBox: React.FC<CheckBoxProps> = ({ checked, onChange, disabled, ...res
   );
 
   return (
-    <label className={`${styles.checkboxContainer} ${disabled ? styles.disabledContainer : ''}`}>
+    <label className={`${s.container}`}>
       <input
         type="checkbox"
         checked={checked}
         disabled={disabled}
         onChange={handleChange}
-        className={styles.checkbox}
+        className={s.checkbox}
         {...restProps}
         style={{ opacity: 0 }}
       />
       <span
-        className={`${styles.customCheckmark} ${disabled ? styles.disabledSpan : ''} ${!disabled ? styles.hover : ''}`}
+        className={`${s.customCheckmark} ${disabled ? s.disabledSpan : ''} ${!disabled ? s.hover : ''}`}
       >
         {checked && !disabled && (
-          <CheckIcon color="accent" width={40} height={40} className={styles.notDisabled} />
+          <CheckIcon color="accent" width={40} height={40} className={s.notDisabled} />
         )}
         {checked && disabled && (
-          <CheckIcon color="primary" width={40} height={40} className={styles.disabled} />
+          <CheckIcon color="primary" width={40} height={40} className={s.disabled} />
         )}
       </span>
     </label>
   );
 };
 
-export default CheckBox;
+export default React.memo(CheckBox);

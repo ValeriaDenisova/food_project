@@ -12,9 +12,10 @@ const CheckIcon: React.FC<IconProps> = ({
   color,
   width = 24,
   height = 24,
+  style,
   ...props
 }) => {
-  const Color = color ? colorMap[color] : '#000';
+  const fillColor = color ? colorMap[color] : '#000';
 
   return (
     <svg
@@ -23,12 +24,13 @@ const CheckIcon: React.FC<IconProps> = ({
       width={width}
       height={height}
       viewBox={`0 0 24 24`}
+      style={{ color: fillColor, ...style }} 
       fill="none"
       {...props}
     >
-      <path d="M4 11.6129L9.87755 18L20 7" stroke={Color} strokeWidth="2" />
+      <path d="M4 11.6129L9.87755 18L20 7" fill="currentColor" strokeWidth="2" />
     </svg>
   );
 };
 
-export default CheckIcon;
+export default React.memo(CheckIcon);

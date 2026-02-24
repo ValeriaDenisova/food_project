@@ -1,28 +1,25 @@
-@import '../../styles/variables.scss';
+@use 'styles/variables.scss' as *;
+@use 'styles/mixins' as *;
 
 .button {
-  display: flex;
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
+  @include displayFlexAlignCenterJCcenter;
+  @include normal400;
   padding: 17px 20px;
   gap: 8px;
   background: $default-color;
   border-radius: 0px;
-  font-style: normal;
-  font-weight: 400;
   font-size: 18px;
   line-height: 18px;
   border: none;
-  color: #ffffff;
+  color: $background-white;
   border-radius: $border-radius;
 }
 
-.button_hover:hover {
+.button__hover:hover {
   background: $button-hover;
 }
 
-.button_disabled:disabled {
+.button__disabled:disabled {
   background: $button-disabled;
 }
 

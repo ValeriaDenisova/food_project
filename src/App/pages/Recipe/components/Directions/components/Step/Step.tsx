@@ -1,6 +1,6 @@
 import React from 'react';
 import Text from 'components/Text';
-import styles from './Step.module.scss';
+import s from './Step.module.scss';
 
 interface StepProps {
   number: string;
@@ -10,10 +10,10 @@ interface StepProps {
 const Step: React.FC<StepProps> = ({ number, text }) => {
   return (
     <>
-      <Text className={styles.title}>Step {number}</Text>
-      <Text className={styles.text}>{text}</Text>
+      <Text className={s.title}>Step {number}</Text>
+      <Text className={s.text}>{text}</Text>
     </>
   );
 };
 
-export default Step;
+export default React.memo(Step);

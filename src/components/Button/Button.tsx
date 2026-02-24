@@ -1,7 +1,7 @@
 import React from 'react';
 import classNames from 'classnames';
 import Loader from '../Loader';
-import styles from './Button.module.scss';
+import s from './Button.module.scss';
 
 export type ButtonProps = React.ButtonHTMLAttributes<HTMLButtonElement> & {
   loading?: boolean;
@@ -19,8 +19,8 @@ const Button: React.FC<ButtonProps> = ({
 }) => {
   const buttonClass =
     loading && !disabled
-      ? classNames(styles.button, className)
-      : classNames(styles.button, styles.button_disabled, styles.button_hover, className);
+      ? classNames(s.button, className)
+      : classNames(s.button, s.button__disabled, s.button__hover, className);
 
   const isDisabled = disabled || loading;
 
@@ -40,4 +40,4 @@ const Button: React.FC<ButtonProps> = ({
   );
 };
 
-export default Button;
+export default React.memo(Button);

@@ -25,3 +25,8 @@ export const getPages = (numberStarlings: number, active: number) => {
   pages.push(1, '...', active - 1, active, active + 1, '...', numberStarlings);
   return pages;
 };
+
+
+export const nullFunction = () => null;
+
+

@@ -2,7 +2,7 @@ import React from 'react';
 import classNames from 'classnames';
 import Button from '../Button';
 import Text from '../Text';
-import styles from './Card.module.scss';
+import s from './Card.module.scss';
 
 export type CardProps = {
   className?: string;
@@ -25,18 +25,18 @@ const Card: React.FC<CardProps> = ({
   onClick,
   actionSlot,
 }) => {
-  const Class = classNames(styles.card, className);
+  const Class = classNames(s.card, className);
   return (
     <div className={Class} onClick={onClick}>
-      <div className={styles.cardImg}>
-        <img src={image} alt="" />
+      <div className={s.cardImg}>
+        <img className={s.cardImg__img} src={image} alt="" />
       </div>
-      <div className={styles.cardInfo}>
-        {captionSlot && <p className={styles.captionSlot}>{captionSlot}</p>}
-        <Text className={styles.title}>{title}</Text>
-        <Text className={styles.subtitle}>{subtitle}</Text>
-        <div className={styles.cardFooter}>
-          <div className={styles.contentSlot}>{contentSlot}</div>
+      <div className={s.cardInfo}>
+        {captionSlot && <p className={s.captionSlot}>{captionSlot}</p>}
+        <Text className={s.title}>{title}</Text>
+        <Text className={s.subtitle}>{subtitle}</Text>
+        <div className={s.cardFooter}>
+          <div className={s.contentSlot}>{contentSlot}</div>
           {actionSlot ? actionSlot : <Button>Save</Button>}
         </div>
       </div>
@@ -44,4 +44,4 @@ const Card: React.FC<CardProps> = ({
   );
 };
 
-export default Card;
+export default React.memo(Card);

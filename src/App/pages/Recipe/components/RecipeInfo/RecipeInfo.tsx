@@ -1,6 +1,6 @@
 import React from 'react';
-import styles from './RecipeInfo.module.scss';
 import RecipeInfoElement from './components/RecipeInfoElement';
+import s from './RecipeInfo.module.scss';
 
 interface RecipeInfoProps {
   cookingTime: number;
@@ -22,12 +22,12 @@ const RecipeInfo: React.FC<RecipeInfoProps> = ({
   img,
 }) => {
   return (
-    <div className={styles.recipeInfo}>
-      <div className={styles.img}>
-        <img src={img} alt="" />
+    <div className={s.recipeInfo}>
+      <div className={s.recipeInfo__img}>
+        <img className={s.img} src={img} alt="" />
       </div>
-      <div className={styles.info_container}>
-        <div className={styles.info}>
+      <div className={s.info__container}>
+        <div className={s.info}>
           <RecipeInfoElement title={'Preparation'} info={`${preparationTime} minutes`} />
           <RecipeInfoElement title={'Cooking'} info={`${cookingTime} minutes`} />
           <RecipeInfoElement title={'Total'} info={`${totalTime} minutes`} />
@@ -40,4 +40,4 @@ const RecipeInfo: React.FC<RecipeInfoProps> = ({
   );
 };
 
-export default RecipeInfo;
+export default React.memo(RecipeInfo);

@@ -1,6 +1,6 @@
 import React from 'react';
 import TextTitle from 'components/TextTitle';
-import styles from './IngredientsEquipmentContainer.module.scss';
+import s from './IngredientsEquipmentContainer.module.scss';
 
 interface IngredientsEquipmentContainerProps {
   title: string;
@@ -14,9 +14,9 @@ const IngredientsEquipmentContainer: React.FC<IngredientsEquipmentContainerProps
   width,
 }) => {
   return (
-    <div className={styles.ingredientsContainer} style={{ width: width ? width : undefined }}>
+    <div className={s.ingredientsContainer} style={{ width: width ? width : undefined }}>
       <TextTitle text={title} />
-      <div className={styles.contant}>
+      <div className={s.content}>
         {arrayElement.map((element, index) => (
           <React.Fragment key={index}>{element}</React.Fragment>
         ))}
@@ -25,4 +25,4 @@ const IngredientsEquipmentContainer: React.FC<IngredientsEquipmentContainerProps
   );
 };
 
-export default IngredientsEquipmentContainer;
+export default React.memo(IngredientsEquipmentContainer);

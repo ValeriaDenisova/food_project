@@ -1,17 +1,27 @@
+import React from 'react';
 import Text from 'components/Text';
 import classNames from 'classnames';
-import styles from './Menu.module.scss';
+import { MENU_CONFIG, type MenuItem } from './config'; 
+import s from './Menu.module.scss';
 
-const Menu: React.FC = () => {
+interface MenuProps {
+  isOpen?: boolean; 
+}
+
+const Menu: React.FC<MenuProps> = ({isOpen}) => {
   return (
-    <div className={styles.menu}>
-      <Text className={classNames(styles.menu_li, styles.menu_li__active)}>Recipes</Text>
-      <Text className={classNames(styles.menu_li)}>Meals Categories</Text>
-      <Text className={classNames(styles.menu_li)}>Products</Text>
-      <Text className={classNames(styles.menu_li)}>Menu Items</Text>
-      <Text className={classNames(styles.menu_li)}>Meal Planning</Text>
+    <div className={classNames(s.menu, s.menu__mobile, { [s.menu__open]: isOpen })}>
+      {MENU_CONFIG.map((item: MenuItem, index) => (
+        <Text
+          key={index}
+          className={classNames(s.menu__li, 
+                                index === 0 ? s.menu_li_active : '')} 
+        >
+          {item.title}
+        </Text>
+      ))}
     </div>
   );
 };
 
-export default Menu;
+export default React.memo(Menu);

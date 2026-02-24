@@ -1,7 +1,7 @@
 import React from 'react';
 import Step from './components/Step';
 import TextTitle from 'components/TextTitle';
-import styles from './Directions.module.scss';
+import s from './Directions.module.scss';
 
 interface DirectionsProps {
   directions: {
@@ -12,9 +12,9 @@ interface DirectionsProps {
 
 const Directions: React.FC<DirectionsProps> = ({ directions }) => {
   return (
-    <div className={styles.directions}>
+    <div className={s.directions}>
       <TextTitle text={'Directions'} />
-      <div className={styles.stenContant}>
+      <div className={s.stenContant}>
         {directions?.map((direction, index) => (
           <Step key={direction.id} number={`${index}`} text={direction.description} />
         ))}
@@ -23,4 +23,4 @@ const Directions: React.FC<DirectionsProps> = ({ directions }) => {
   );
 };
 
-export default Directions;
+export default React.memo(Directions);

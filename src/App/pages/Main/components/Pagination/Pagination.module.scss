@@ -1,50 +1,42 @@
-@import 'styles/variables.scss';
+@use 'styles/variables.scss' as *;
+@use 'styles/mixins' as *;
 
 .pagination {
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include displayFlexAlignCenterJCcenter;
   gap: 15px;
+
+  @include respondTo390{
+    gap: 0px;
+  }
+
+  @include respondTo320{
+    gap: 5px;
+  }
 }
 
-.pagination_number {
+.pagination__number {
   display: flex;
 }
 
 .numberPages {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 38px;
-  height: 42px;
-  border: 1.5px solid #f7e8d7;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 22px;
-  color: #000000;
+  @include  paginationNumber;
+  
+  color: $color-black;
+
+  @include respondTo320 {
+     display: none;
+  }
 }
 
 .active {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  width: 38px;
-  height: 42px;
+  @include  paginationNumber;
+
   background: $default-color;
-  font-style: normal;
-  font-weight: 400;
-  font-size: 18px;
-  line-height: 22px;
-  color: #ffffff;
+  color: $background-white;
   flex: none;
   order: 0;
   flex-grow: 1;
 }
-@media (max-width: 165px) {
-  .pagination {
-    display: none;
-  }
-}
+
+
+

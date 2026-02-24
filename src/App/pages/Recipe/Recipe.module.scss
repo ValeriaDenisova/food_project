@@ -1,12 +1,12 @@
-@import 'styles/variables.scss';
+@use 'styles/variables.scss' as *;
+@use 'styles/mixins' as *;
 
 .recipe {
   padding-top: 49px;
   padding-bottom: 53px;
 }
 
-.recipe_contant {
-  display: flex;
-  flex-direction: column;
+.recipe__content {
+  @include flexColumn;
   gap: $flex-gap;
 }

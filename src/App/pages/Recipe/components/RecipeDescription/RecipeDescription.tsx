@@ -1,12 +1,12 @@
 import React from 'react';
-import styles from './RecipeDescription.module.scss';
+import s from './RecipeDescription.module.scss';
 
 interface RecipeDescriptionProps {
   text: React.ReactNode;
 }
 
 const RecipeDescription: React.FC<RecipeDescriptionProps> = ({ text }) => {
-  return <div className={styles.recipeDescription}>{text}</div>;
+  return <div className={s.recipeDescription}>{text}</div>;
 };
 
-export default RecipeDescription;
+export default React.memo(RecipeDescription);

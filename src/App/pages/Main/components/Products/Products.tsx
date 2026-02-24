@@ -2,8 +2,8 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import parse from 'html-react-parser';
 import Card from 'components/Card';
-import styles from './Products.module.scss';
 import type { Product } from '../../../../../hooks/useProducts/type';
+import s from './Products.module.scss';
 
 interface ProductsProps {
   data: Product[];
@@ -11,7 +11,7 @@ interface ProductsProps {
 
 const Products: React.FC<ProductsProps> = ({ data }) => {
   return (
-    <div className={styles.ProductsElements}>
+    <div className={s.ProductsElements}>
       {data?.map((item, index) => {
         const cleanedSummary = item.summary
           .replace(/<a[^>]*>(.*?)<\/a>/g, '<span>$1</span>')
@@ -25,7 +25,7 @@ const Products: React.FC<ProductsProps> = ({ data }) => {
               image={item.images[0].url}
               title={parse(cleanedName)}
               subtitle={parse(cleanedSummary)}
-              contentSlot={<p className={styles.slot}>{item.calories} kcal</p>}
+              contentSlot={<p className={s.slot}>{item.calories} kcal</p>}
             />
           </Link>
         );
@@ -34,4 +34,4 @@ const Products: React.FC<ProductsProps> = ({ data }) => {
   );
 };
 
-export default Products;
+export default React.memo(Products);

@@ -1,7 +1,7 @@
 import React from 'react';
 import Input from '../Input';
-import styles from './MultiDropdown.module.scss';
 import { useMultiDropdown } from './useMultiDropdown';
+import s from './MultiDropdown.module.scss';
 
 export type Option = {
   key: string;
@@ -50,7 +50,7 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
   });
 
   return (
-    <div className={`${className} ${styles.multiDropdown}`} ref={containerRef}>
+    <div className={`${className} ${s.multiDropdown}`} ref={containerRef}>
       <Input
         value={isInputFocused ? filterText : selected.length ? getTitle(selected) : ''}
         onFocus={() => setIsInputFocused(true)}
@@ -66,7 +66,7 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
         {...props}
       />
       {!disabled && isOpen && (
-        <div className={styles.optionsContainer}>
+        <div className={s.options}>
           {filteredOptions.map((option) => (
             <p key={option.key} onClick={() => handleClickOption(option.key)}>
               {option.value}
@@ -78,4 +78,4 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
   );
 };
 
-export default MultiDropdown;
+export default React.memo(MultiDropdown);

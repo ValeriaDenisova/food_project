@@ -1,19 +1,31 @@
-@import 'styles/variables.scss';
+@use 'styles/variables.scss' as *;
+@use 'styles/mixins' as *;
+
 .recipeInfo {
-  display: flex;
+  @include displayFlexAlignCenter;
   gap: 3px;
-  align-items: center;
+
+  @include respondToSmall {
+    flex-direction: column;
+    gap: 20px;
+  }
 }
 
-.img {
+.recipeInfo__img {
   width: 448px;
   height: 298px;
   border-radius: $border-radius;
+
+ @include respondToMedium  {
+    width: 48%;
+  }
+
+  @include respondToSmall {
+    width: 100%;
+  }
 }
-.img img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.img{
+  @include positionImg;
   border-radius: $border-radius;
 }
 
@@ -22,53 +34,29 @@
   grid-template-columns: 1fr 1fr 1fr;
   row-gap: 50px;
   column-gap: 100px;
-}
 
-.info_container {
-  display: flex;
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-}
-
-@media (max-width: 1024px) {
-  .img {
-    width: 48%;
-  }
-
-  .info {
+  @include respondToMedium {
     column-gap: 40px;
   }
-}
 
-@media (max-width: 768px) {
-  .recipeInfo {
-    flex-direction: column;
-    gap: 20px;
-  }
-
-  .img {
-    width: 100%;
-  }
-}
-
-@media (max-width: 768px) {
-  .info {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-  }
-}
-
-@media (max-width: 375px) {
-  .info {
+  @include respondToSmall {
     display: grid;
     grid-template-columns: 1fr 1fr;
   }
-}
 
-@media (max-width: 250px) {
-  .info {
+  @include respondToExtraSmall{
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @include respondTo250{
     display: grid;
     grid-template-columns: 1fr;
   }
 }
+
+.info__container {
+  @include displayFlexAlignCenterJCcenter;
+  flex: 1;
+}
+

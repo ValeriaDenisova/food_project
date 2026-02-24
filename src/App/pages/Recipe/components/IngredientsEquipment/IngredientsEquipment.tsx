@@ -1,8 +1,10 @@
 import React from 'react';
-import styles from './IngredientsEquipment.module.scss';
 import IngredientsEquipmentContainer from './components/IngredientsEquipmentContainer';
-import IngredientsEquipmentElement from './components/IngredientsEquipmentContainer/IngredientsEquipmenElement';
+import IngredientsEquipmentElement from './components/IngredientsEquipmentContainer/components/IngredientsEquipmenElement';
 import IngredientsEquipmentSeparator from './components/IngredientsEquipmentSeparator';
+import ingredientsSvg from "components/icons/ingredients.svg";
+import equipmentSvg from "components/icons/equipment.svg";
+import s from './IngredientsEquipment.module.scss';
 
 interface IngredientsEquipmentProps {
   ingradients: {
@@ -19,7 +21,7 @@ interface IngredientsEquipmentProps {
 
 const IngredientsEquipment: React.FC<IngredientsEquipmentProps> = ({ ingradients, equipments }) => {
   return (
-    <div className={styles.ingredientsContainer}>
+    <div className={s.ingredientsContainer}>
       <IngredientsEquipmentContainer
         title={'Ingredients'}
         width={'calc(50% - 3.5px)'}
@@ -27,28 +29,7 @@ const IngredientsEquipment: React.FC<IngredientsEquipmentProps> = ({ ingradients
           ingradients?.map((ingradient) => (
             <IngredientsEquipmentElement
               key={ingradient.id}
-              svg={
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                >
-                  <path
-                    d="M23.1605 17.189C23.0466 14.3792 21.8991 11.7539 19.8988 9.75367C18.5148 8.36964 16.8316 7.39356 14.995 6.88571C14.8783 5.33494 13.5801 4.10855 12 4.10855C10.4199 4.10855 9.12175 5.3349 9.00503 6.88571C7.16847 7.39356 5.48523 8.36964 4.10124 9.75367C2.10094 11.7539 0.953486 14.3792 0.839533 17.189C0.364126 17.2677 0 17.6805 0 18.1778V18.8881C0 19.4413 0.450142 19.8914 1.00336 19.8914H22.9966C23.5499 19.8914 24 19.4413 24 18.8881V18.1778C24 17.6805 23.6359 17.2677 23.1605 17.189ZM12 5.06476C12.9736 5.06476 13.79 5.74768 13.997 6.6594C13.3445 6.54226 12.6769 6.48184 12 6.48184C11.3231 6.48184 10.6555 6.54226 10.003 6.6594C10.21 5.74768 11.0265 5.06476 12 5.06476ZM12 7.43804C17.4721 7.43804 21.953 11.7632 22.2034 17.1744H1.79663C2.04704 11.7632 6.52792 7.43804 12 7.43804ZM23.0439 18.8881C23.0439 18.9141 23.0227 18.9353 22.9967 18.9353H1.00336C0.977346 18.9353 0.956158 18.9141 0.956158 18.8881V18.1778C0.956158 18.1518 0.977346 18.1306 1.00336 18.1306H22.9967C23.0227 18.1306 23.0439 18.1518 23.0439 18.1778V18.8881Z"
-                    fill="#B5460F"
-                  />
-                  <path
-                    d="M21.4198 15.8536C21.1562 14.4656 20.5736 13.1279 19.735 11.9851C19.5787 11.7722 19.2795 11.7263 19.0666 11.8825C18.8537 12.0387 18.8078 12.3379 18.964 12.5508C19.7297 13.5941 20.2399 14.7654 20.4804 16.0319C20.5239 16.2612 20.7245 16.4209 20.9495 16.4209C20.9791 16.4209 21.0091 16.4181 21.0392 16.4123C21.2988 16.3632 21.4691 16.1129 21.4198 15.8536Z"
-                    fill="#B5460F"
-                  />
-                  <path
-                    d="M18.7107 10.8038C18.6075 10.7026 18.5004 10.6023 18.3924 10.5057C18.1958 10.3297 17.8934 10.3463 17.7174 10.543C17.5412 10.7398 17.5579 11.042 17.7547 11.2181C17.852 11.3052 17.9485 11.3956 18.0413 11.4867C18.1344 11.5779 18.2552 11.6233 18.3759 11.6233C18.4999 11.6233 18.6238 11.5754 18.7174 11.4799C18.9023 11.2913 18.8993 10.9886 18.7107 10.8038Z"
-                    fill="#B5460F"
-                  />
-                </svg>
-              }
+              svg={<img src={ingredientsSvg} alt=""/>}
               text={`${ingradient.amount} ${ingradient.name}`}
             />
           )),
@@ -62,22 +43,7 @@ const IngredientsEquipment: React.FC<IngredientsEquipmentProps> = ({ ingradients
           equipments?.map((equipment) => (
             <IngredientsEquipmentElement
               key={equipment.id}
-              svg={
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="24"
-                  height="24"
-                  viewBox="0 0 24 24"
-                  fill="none"
-                >
-                  <path
-                    fillRule="evenodd"
-                    clipRule="evenodd"
-                    d="M4.94982 1.67442C3.14086 1.67442 1.67442 3.14086 1.67442 4.94982C1.67442 5.41219 1.29958 5.78702 0.837209 5.78702C0.374835 5.78702 0 5.41219 0 4.94982C0 2.2161 2.2161 0 4.94982 0C7.68353 0 9.89963 2.2161 9.89963 4.94982V12.6657C10.3089 12.422 10.7776 12.2108 11.2725 12.0306C12.7604 11.4892 14.6721 11.1628 16.4651 11.1628C18.2598 11.1628 20.0432 11.4899 21.4063 12.0413C22.0855 12.316 22.7023 12.6634 23.1637 13.0894C23.6229 13.5135 24 14.0872 24 14.7907V16.1126C24 20.4687 20.4687 24 16.1126 24C11.7565 24 8.22521 20.4687 8.22521 16.1126V4.94982C8.22521 3.14086 6.75877 1.67442 4.94982 1.67442ZM22.2402 17.1452C21.7485 20.085 19.1922 22.3256 16.1126 22.3256C12.9647 22.3256 10.3636 19.9845 9.95537 16.9484C10.3513 17.1784 10.7998 17.3788 11.2725 17.5508C12.7604 18.0922 14.6721 18.4186 16.4651 18.4186C18.2598 18.4186 20.0432 18.0916 21.4063 17.5401C21.6982 17.422 21.9786 17.2905 22.2402 17.1452ZM22.3256 14.7907C22.3256 14.7235 22.2915 14.5632 22.0278 14.3195C21.7659 14.0777 21.3475 13.8238 20.7783 13.5935C19.6448 13.1349 18.0795 12.8372 16.4651 12.8372C14.8491 12.8372 13.1329 13.1355 11.8451 13.6041C11.198 13.8396 10.7044 14.1018 10.3893 14.356C10.0594 14.6221 10.0465 14.7747 10.0465 14.7907C10.0465 14.8067 10.0594 14.9593 10.3893 15.2254C10.7044 15.4796 11.198 15.7418 11.8452 15.9773C13.1329 16.4459 14.8491 16.7442 16.4651 16.7442C18.0795 16.7442 19.6448 16.4466 20.7783 15.9879C21.3475 15.7577 21.7659 15.5037 22.0278 15.2619C22.2915 15.0182 22.3256 14.8579 22.3256 14.7907Z"
-                    fill="#B5460F"
-                  />
-                </svg>
-              }
+              svg={<img src={equipmentSvg} alt=""/>}
               text={equipment.name}
             />
           )),
@@ -87,4 +53,4 @@ const IngredientsEquipment: React.FC<IngredientsEquipmentProps> = ({ ingradients
   );
 };
 
-export default IngredientsEquipment;
+export default React.memo(IngredientsEquipment);

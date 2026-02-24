@@ -5,4 +5,5 @@ export interface IconProps {
   color: ColorType;
   width: number;
   height: number;
+  style?: React.CSSProperties;
 }

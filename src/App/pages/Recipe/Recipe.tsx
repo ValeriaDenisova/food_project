@@ -2,12 +2,12 @@ import React from 'react';
 import { useParams } from 'react-router-dom';
 import parse from 'html-react-parser';
 import RecipeHeader from './components/RecipeHeader';
-import styles from './Recipe.module.scss';
 import RecipeInfo from './components/RecipeInfo';
 import RecipeDescription from './components/RecipeDescription';
 import IngredientsEquipment from './components/IngredientsEquipment';
 import Directions from './components/Directions';
 import { useProductsInfo } from 'hooks/useProductInfo/useProductInfo';
+import s from './Recipe.module.scss';
 
 const Recipe: React.FC = () => {
   const params = useParams<{ id: string }>();
@@ -16,9 +16,9 @@ const Recipe: React.FC = () => {
 
   return (
     <div className="wrapper">
-      <div className={styles.recipe}>
+      <div className={s.recipe}>
         <RecipeHeader />
-        <div className={styles.recipe_contant}>
+        <div className={s.recipe__content}>
           {product && (
             <RecipeInfo
               cookingTime={product.data.cookingTime}
@@ -44,4 +44,4 @@ const Recipe: React.FC = () => {
   );
 };
 
-export default Recipe;
+export default React.memo(Recipe);
