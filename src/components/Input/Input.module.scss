@@ -22,7 +22,7 @@
   border: none;
   outline: none;
   flex: 1;
-  min-width: 200px;
+  width: 100%;
   @include normal400-fz16;
   color: $color-black;
 }

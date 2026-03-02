@@ -7,7 +7,9 @@
       "config": ["config/*"],
       "styles": ["styles/*"],
       "hooks": ["hooks/*"],
-      "utils": ["utils/*"]
+      "utils": ["utils/*"],
+      "store": ["store/*"],
+      "context": ["context/*"]
     }
   },
   "references": [{ "path": "./tsconfig.app.json" }, { "path": "./tsconfig.node.json" }]

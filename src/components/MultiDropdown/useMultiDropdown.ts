@@ -7,6 +7,7 @@ interface UseMultiDropdownProps {
   options: Option[];
   onChange: (value: Option[]) => void;
   getTitle: (value: Option[]) => string;
+  onOpenCategory: (value: boolean) => void;
 }
 
 export function useMultiDropdown({
@@ -15,20 +16,38 @@ export function useMultiDropdown({
   options,
   onChange,
   getTitle,
+  onOpenCategory
 }: UseMultiDropdownProps) {
-  const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const toggleDropdown = useCallback(
     (value: boolean) => {
-      if (disabled) setIsOpen(false);
-      setIsOpen(value);
+      if (disabled) {onOpenCategory(false)};
+      onOpenCategory(value);
     },
-    [disabled, setIsOpen, setIsOpen]
+    [disabled, onOpenCategory]
   );
 
+
   const [selected, setSelected] = useState<Option[]>(value);
+  useEffect(() => {
+    setSelected(value);
+  }, [value]);
+
+  // const selectedValue: Option[] = [];
+
+  // for(let i=0; i< value.length; i++){
+  //   selectedValue.push(value[i])
+  // }
+
+  // setSelected(selectedValue);
+
+  useEffect(() => {
+   onChange(selected);
+  }, [selected, onChange]);
+
+
   const handleClickOption = useCallback(
-    (key: string) => {
+    (key: string | number) => {
       const selectedOption = options.find((option) => option.key === key);
       if (!selectedOption) return;
 
@@ -38,15 +57,14 @@ export function useMultiDropdown({
 
         if (isSelected) {
           newSelected = prev.filter((option) => option.key !== key);
-          onChange(newSelected);
         } else {
           newSelected = [...prev, selectedOption];
-          onChange([selectedOption]);
         }
         return newSelected;
       });
+    
     },
-    [options, onChange]
+    [options]
   );
 
   const containerRef = useRef<HTMLDivElement | null>(null);
@@ -83,14 +101,12 @@ export function useMultiDropdown({
   return {
     containerRef,
     isInputFocused,
-    filterText,
     selected,
     setIsInputFocused,
     setFilterText,
     handleChange,
     toggleDropdown,
     plaseholder,
-    isOpen,
     filteredOptions,
     handleClickOption,
   };

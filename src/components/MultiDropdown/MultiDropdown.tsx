@@ -4,7 +4,7 @@ import { useMultiDropdown } from './useMultiDropdown';
 import s from './MultiDropdown.module.scss';
 
 export type Option = {
-  key: string;
+  key: string | number;
   value: string;
 };
 
@@ -16,6 +16,8 @@ export type MultiDropdownProps = {
   disabled?: boolean;
   getTitle: (value: Option[]) => string;
   afterSlot?: React.ReactNode;
+  isOpenCategory: boolean;
+  onOpenCategory: (value: boolean) => void;
 };
 
 const MultiDropdown: React.FC<MultiDropdownProps> = ({
@@ -26,19 +28,19 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
   disabled,
   getTitle,
   afterSlot,
+  isOpenCategory,
+  onOpenCategory,
   ...props
 }) => {
   const {
     containerRef,
     isInputFocused,
-    filterText,
     selected,
     setIsInputFocused,
     setFilterText,
     handleChange,
     toggleDropdown,
     plaseholder,
-    isOpen,
     filteredOptions,
     handleClickOption,
   } = useMultiDropdown({
@@ -47,12 +49,17 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
     onChange,
     disabled,
     getTitle,
+    onOpenCategory,
   });
+
+
 
   return (
     <div className={`${className} ${s.multiDropdown}`} ref={containerRef}>
       <Input
-        value={isInputFocused ? filterText : selected.length ? getTitle(selected) : ''}
+        value={
+         isInputFocused || selected.length === 0 ? '' : getTitle(selected)
+        }
         onFocus={() => setIsInputFocused(true)}
         onBlur={() => {
           setIsInputFocused(false);
@@ -63,12 +70,16 @@ const MultiDropdown: React.FC<MultiDropdownProps> = ({
         placeholder={plaseholder}
         disabled={disabled}
         afterSlot={afterSlot}
+        readOnly
         {...props}
       />
-      {!disabled && isOpen && (
+      {!disabled && isOpenCategory && (
         <div className={s.options}>
           {filteredOptions.map((option) => (
-            <p key={option.key} onClick={() => handleClickOption(option.key)}>
+            <p key={option.key} className={
+            `${s.options__element} 
+            ${selected.some(selectedOption => selectedOption.key === option.key) ? s.option__active : ''}`
+            } onClick={() => handleClickOption(option.key)}>
               {option.value}
             </p>
           ))}

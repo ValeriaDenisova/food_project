@@ -9,7 +9,7 @@ export interface UseProductsParams {
   };
   fields?: string[];
   populate?: string | string[];
-  filters?: Record<string, any>;
+  filters?: object;
   locale?: string;
 }
 

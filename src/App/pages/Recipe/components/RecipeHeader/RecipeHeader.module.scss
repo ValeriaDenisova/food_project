@@ -1,10 +1,30 @@
 @use 'styles/variables.scss' as *;
 @use 'styles/mixins' as *;
 
-.resipeHeader {
+.resipeHeader__left {
   @include displayFlexAlignCenter;
   gap: 16px;
   margin-bottom: 37px;
+  @include respondToSmall {
+     margin-bottom: 20px;
+  }
+}
+
+.resipeHeader{
+  display: flex;
+  justify-content: space-between;
+  @include respondToSmall {
+    display: block;
+    margin-bottom: 37px;
+  }
+
+}
+
+.resipeHeader__button{
+  width: 190px;
+  @include respondToSmall {
+    width: 100%
+  }
 }
 
 .title {
