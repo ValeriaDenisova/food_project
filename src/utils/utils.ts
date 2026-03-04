@@ -1,3 +1,5 @@
+import type { Option } from 'components/MultiDropdown/MultiDropdown';
+
 export const getPages = (numberStarlings: number, active: number) => {
   const pages = [];
   if (numberStarlings <= 5) {
@@ -26,7 +28,13 @@ export const getPages = (numberStarlings: number, active: number) => {
   return pages;
 };
 
-
 export const nullFunction = () => null;
 
-
+export const handleTitle = (category: Option[]) => {
+  if (category.length == 0) {
+    return 'Categories';
+  }
+  return category.reduce((acc, item) => {
+    return acc + (acc !== '' ? ', ' : '') + item.value;
+  }, '');
+};

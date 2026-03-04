@@ -35,7 +35,7 @@ const Card: React.FC<CardProps> = ({
         {captionSlot && <p className={s.captionSlot}>{captionSlot}</p>}
         <Text className={s.title}>{title}</Text>
         <Text className={s.subtitle}>{subtitle}</Text>
-        <div className={s.cardFooter} >
+        <div className={s.cardFooter}>
           <div className={s.contentSlot}>{contentSlot}</div>
           {actionSlot ? actionSlot : <Button>Save</Button>}
         </div>

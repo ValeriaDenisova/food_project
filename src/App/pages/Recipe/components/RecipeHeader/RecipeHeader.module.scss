@@ -6,24 +6,23 @@
   gap: 16px;
   margin-bottom: 37px;
   @include respondToSmall {
-     margin-bottom: 20px;
+    margin-bottom: 20px;
   }
 }
 
-.resipeHeader{
+.resipeHeader {
   display: flex;
   justify-content: space-between;
   @include respondToSmall {
     display: block;
     margin-bottom: 37px;
   }
-
 }
 
-.resipeHeader__button{
+.resipeHeader__button {
   width: 190px;
   @include respondToSmall {
-    width: 100%
+    width: 100%;
   }
 }
 
@@ -32,7 +31,7 @@
   @include fz44;
   color: $color-black;
 
-  @include respondToMedium{
+  @include respondToMedium {
     @include fz32;
   }
 
@@ -40,13 +39,11 @@
     @include fz28;
   }
 
- @include respondTo250 {
-     @include fz20;
+  @include respondTo250 {
+    @include fz20;
   }
 }
 
-
-.back{
+.back {
   @include respondToNone155;
 }
-

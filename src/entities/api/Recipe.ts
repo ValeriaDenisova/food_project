@@ -11,13 +11,13 @@ export interface RecipeParams {
   populate?: string | string[];
   filters?: {
     category: {
-      id:{
-        $eq: (number|string)[];
-      }
-    },
-    name:{
-      $containsi: string,
-    }
+      id: {
+        $eq: (number | string)[];
+      };
+    };
+    name: {
+      $containsi: string;
+    };
   };
   locale?: string;
 }
@@ -33,25 +33,22 @@ export interface RecipeApi {
   }[];
 }
 
-export interface RecipeModel {
+export interface Recipe {
   id: number;
   documentId: string;
   name: string;
   summary: string;
   calories: number;
   images: string;
-   
 }
 
-export const normalizeRecipe = (from: RecipeApi[]): RecipeModel[] => {
-   return from.map(item => (
-    {
+export const normalizeRecipe = (from: RecipeApi[]): Recipe[] => {
+  return from.map((item) => ({
     id: item.id,
     documentId: item.documentId,
     name: item.name,
-    summary: item.summary, 
+    summary: item.summary,
     calories: item.calories,
     images: item.images[0].url,
   }));
 };
-

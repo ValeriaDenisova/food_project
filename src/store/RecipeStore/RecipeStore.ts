@@ -1,70 +1,201 @@
-import { makeAutoObservable, toJS,  runInAction  } from 'mobx';
-import { normalizeRecipe, type RecipeApi, type RecipeModel, type RecipeParams } from "store/models/api/Recipe";
-import { API_BASE_URL } from 'config/apiConfig'; 
-import ApiStore from 'store/ApiStore'; 
+import { makeAutoObservable, toJS, runInAction, reaction } from 'mobx';
+import { normalizeRecipe, type RecipeApi, type Recipe } from 'entities/api/Recipe';
+import { api } from 'store/ApiStore/ApiStore';
+import type { Option } from 'components/MultiDropdown/MultiDropdown';
+import ApiStore from 'store/ApiStore';
 
+const PAGE_SIZE = 9;
 
-export default class RecipeStore{
-    
-    recipes: RecipeModel[] = [];
-    loading: boolean = false;
-    error: string | null = null;
-    totalPage: number|undefined;
+export default class RecipeStore {
+  recipes: Recipe[] = [];
+  loading: boolean = false;
+  error: string | null = null;
+  totalPage: number | undefined;
+  page: number = 1;
+  pageSize: number = PAGE_SIZE;
+  filtersCategory: Option[] = [];
+  filtersCategoryParam: (string | number)[] = [];
+  search: string = '';
+  loadedTotal: number | undefined;
 
-    private api: ApiStore;
+  private api: ApiStore;
 
-    constructor() {
-        makeAutoObservable(this);
-        this.api = new ApiStore(API_BASE_URL);
+  constructor() {
+    makeAutoObservable(this);
+    this.api = api;
+    const urlParams = new URLSearchParams(window.location.search);
+    const searchParam = urlParams.get('search');
+    if (searchParam) {
+      this.search = searchParam;
     }
 
+    const categoriesJSON = urlParams.get('category');
 
-        async fetchRecipes(params: Partial<RecipeParams>) {
+    if (categoriesJSON) {
+      try {
+        const categoriesFromUrl = JSON.parse(decodeURIComponent(categoriesJSON));
+        this.filtersCategory = categoriesFromUrl;
+        this.handleFiltersCategory();
+      } catch (e) {
+        console.error('Ошибка при разборе категорий из URL', e);
+      }
+    }
+
+    reaction(
+      () => this.totalPage,
+      (total) => {
+        if (total && total > 0) {
+          this.loadedTotal = total;
+        }
+      }
+    );
+
+    this.fetchRecipes();
+    reaction(
+      () => this.page,
+      () => {
+        this.fetchRecipes();
+      }
+    );
+    reaction(
+      () => this.pageSize,
+      () => {
+        this.fetchRecipes();
+      }
+    );
+    reaction(
+      () => this.filtersCategoryParam,
+      () => {
+        this.pageSize = PAGE_SIZE;
+        this.fetchRecipes();
+      }
+    );
+    reaction(
+      () => this.search,
+      () => {
+        this.pageSize = PAGE_SIZE;
+        this.fetchRecipes();
+      }
+    );
+  }
+
+  async fetchRecipes() {
+    runInAction(() => {
+      this.loading = true;
+      this.error = null;
+      this.recipes = [];
+      this.totalPage = 0;
+    });
+
+    try {
+      const response = await this.api.request<{
+        data: RecipeApi[];
+        meta: { pagination: { total: number } };
+      }>({
+        method: 'GET',
+        endpoint: '/recipes',
+        headers: {},
+        data: {
+          pagination: { page: this.page, pageSize: this.pageSize },
+          populate: 'images',
+          filters: {
+            category: {
+              id: {
+                $eq: this.filtersCategoryParam,
+              },
+            },
+            name: {
+              $containsi: this.search,
+            },
+          },
+        },
+      });
+
+      if (response.success) {
         runInAction(() => {
-            this.loading = true;
-            this.error = null;
-            this.recipes = [];
-            this.totalPage = 0; 
-          });
-
-        
-
-        try {
-        const response = await this.api.request<{ data: RecipeApi[]; meta: { pagination: { total: number } } }>({
-            method: 'GET',
-            endpoint: '/recipes',
-            headers: {},
-            data: params,
+          this.recipes = normalizeRecipe(response.data.data);
+          this.totalPage = response.data.meta?.pagination?.total;
         });
-
-        if (response.success) {
-            runInAction(() => {
-                this.recipes = normalizeRecipe(response.data.data);
-                this.totalPage = response.data.meta?.pagination?.total;
-            });
-        } else {
-            runInAction(() => {
-                this.error = `Ошибка: статус ${response.status}`;
-            });
-        }
-        } catch {
-            runInAction(() => {
-                this.error = 'Ошибка при получении рецептов';
-            });
-        } finally {
-            runInAction(() => {
-                this.loading = false;
-            });
-        }
+      } else {
+        runInAction(() => {
+          this.error = `Ошибка: статус ${response.status}`;
+        });
+      }
+    } catch {
+      runInAction(() => {
+        this.error = 'Ошибка при получении рецептов';
+      });
+    } finally {
+      runInAction(() => {
+        this.loading = false;
+      });
     }
+  }
 
-    get cleanRecipes(): RecipeModel[] {
-        return toJS(this.recipes);
-    }
+  get cleanRecipes(): Recipe[] {
+    return toJS(this.recipes);
+  }
 
-    get cleanRecipesLoading(): boolean {
-        return this.loading;
+  get cleanRecipesLoading(): boolean {
+    return this.loading;
+  }
+  get getTotal(): number {
+    console.log(this.totalPage);
+    return this.totalPage ? this.totalPage : 0;
+  }
+
+  setPage(value: number) {
+    this.page = value;
+  }
+
+  setPageSize(value: number) {
+    this.pageSize = value;
+  }
+
+  setFiltersCategory(value: Option[]) {
+    this.filtersCategory = value;
+    this.handleFiltersCategory();
+  }
+
+  setSearch(value: string) {
+    this.search = value;
+    this.paramSearch();
+  }
+
+  get getPage() {
+    return this.page;
+  }
+
+  get getPageSize() {
+    return this.pageSize;
+  }
+
+  get getFiltersCategoryParam() {
+    return this.filtersCategoryParam;
+  }
+
+  get getSearch() {
+    return this.search;
+  }
+
+  get total() {
+    return this.loadedTotal;
+  }
+
+  paramSearch = () => {
+    const params = new URLSearchParams(window.location.search);
+    if (resipes.getSearch) {
+      params.set('search', resipes.getSearch);
+    } else {
+      params.delete('search');
     }
-    
+    const newUrl = `${window.location.pathname}?${params.toString()}`;
+    window.history.replaceState(null, '', newUrl);
+  };
+
+  handleFiltersCategory = () => {
+    this.filtersCategoryParam = this.filtersCategory.map((option) => option.key);
+  };
 }
 
+export const resipes = new RecipeStore();

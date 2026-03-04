@@ -1,1 +1,0 @@
-export {useProductsInfo} from './useProductInfo'; 

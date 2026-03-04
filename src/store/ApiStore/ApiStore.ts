@@ -1,10 +1,7 @@
 import { stringify } from 'qs';
-import {HTTPMethod, StatusHTTP} from './types'; 
-import type {
-  ApiResponse,
-  IApiStore,
-  RequestParams,
-} from './types';
+import { API_BASE_URL } from 'config/apiConfig';
+import { HTTPMethod, StatusHTTP } from './types';
+import type { ApiResponse, IApiStore, RequestParams } from './types';
 
 export default class ApiStore implements IApiStore {
   readonly baseUrl: string;
@@ -27,7 +24,7 @@ export default class ApiStore implements IApiStore {
     if (params.method === HTTPMethod.POST) {
       options.headers = {
         ...options.headers,
-        "Content-Type": "application/json;charset=utf-8",
+        'Content-Type': 'application/json;charset=utf-8',
       };
       options.body = JSON.stringify(params.data);
     }
@@ -56,3 +53,5 @@ export default class ApiStore implements IApiStore {
     }
   }
 }
+
+export const api = new ApiStore(API_BASE_URL);

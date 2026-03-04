@@ -7,15 +7,15 @@
   row-gap: 10px;
   column-gap: 20px;
 
-  @include respondToMedium{
+  @include respondToMedium {
     grid-template-columns: auto auto;
   }
 
-  @include respondToSmall{
+  @include respondToSmall {
     grid-template-columns: auto auto;
   }
 
-  @include respondToExtraSmall{
+  @include respondToExtraSmall {
     grid-template-columns: auto;
   }
 }
@@ -23,9 +23,7 @@
 .ingredientsContainer {
   width: auto;
 
-  @include respondToSmall{
+  @include respondToSmall {
     width: 100% !important;
   }
 }
-
-

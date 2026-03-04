@@ -12,7 +12,6 @@ export type InputProps = Omit<React.InputHTMLAttributes<HTMLInputElement>, 'onCh
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
   ({ value, onChange, onChangeKey, afterSlot, className, placeholder, width, ...rest }, ref) => {
-
     return (
       <div
         className={`${s.container} ${rest.disabled ? s.container__disabled : ''} ${className}`}
@@ -22,9 +21,9 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
           ref={ref}
           value={value}
           onChange={(e) => {
-            onChange(e.target.value)
-            if(e.target.value.length === 0 && onChangeKey !== undefined){
-              onChangeKey(e.target.value)
+            onChange(e.target.value);
+            if (e.target.value.length === 0 && onChangeKey !== undefined) {
+              onChangeKey(e.target.value);
             }
           }}
           onKeyDown={(e: React.KeyboardEvent<HTMLInputElement>) => {

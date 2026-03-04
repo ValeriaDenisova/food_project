@@ -1,1 +1,1 @@
-export { default } from "./SingInToStore";
+export { default } from './SinglnToStore';

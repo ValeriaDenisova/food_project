@@ -1,1 +1,2 @@
-export { default } from "./RecipeStore";
+export { default } from './RecipeStore';
+export * from './RecipeStore';

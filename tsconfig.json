@@ -9,7 +9,8 @@
       "hooks": ["hooks/*"],
       "utils": ["utils/*"],
       "store": ["store/*"],
-      "context": ["context/*"]
+      "context": ["context/*"],
+      "entities": ["entities/*"]
     }
   },
   "references": [{ "path": "./tsconfig.app.json" }, { "path": "./tsconfig.node.json" }]

@@ -16,33 +16,31 @@
   }
 }
 
-@mixin respondTo390{
+@mixin respondTo390 {
   @media (max-width: 390px) {
     @content;
   }
 }
 
-@mixin respondTo320{
+@mixin respondTo320 {
   @media (max-width: 320px) {
     @content;
   }
 }
 
-
-
-@mixin respondTo250{
+@mixin respondTo250 {
   @media (max-width: 250px) {
     @content;
   }
 }
 
-@mixin respondTo190{
+@mixin respondTo190 {
   @media (max-width: 190px) {
     @content;
   }
 }
 
-@mixin respondTo185{
+@mixin respondTo185 {
   @media (max-width: 185px) {
     @content;
   }
@@ -53,7 +51,6 @@
     width: 100%;
   }
 }
-
 
 @mixin respondToNoneExtraSmall {
   @media (max-width: 375px) {
@@ -67,12 +64,11 @@
   }
 }
 
-@mixin respondToNone155{
+@mixin respondToNone155 {
   @media (max-width: 155px) {
     display: none;
   }
 }
-
 
 @mixin displayFlexAlignCenter {
   display: flex;
@@ -84,7 +80,6 @@
   align-items: center;
   flex-direction: column;
 }
-
 
 @mixin flexColumnCenter {
   display: flex;
@@ -106,87 +101,86 @@
 }
 
 @mixin flexColumn {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 @mixin normal700 {
-    font-style: normal;
-    font-weight: 700;
+  font-style: normal;
+  font-weight: 700;
 }
 
 @mixin normal600 {
-    font-style: normal;
-    font-weight: 700;
+  font-style: normal;
+  font-weight: 700;
 }
 
 @mixin normal500 {
-    font-style: normal;
-    font-weight: 500;
+  font-style: normal;
+  font-weight: 500;
 }
 
 @mixin normal400 {
-    font-style: normal;
-    font-weight: 400;
+  font-style: normal;
+  font-weight: 400;
 }
 
 @mixin fz44 {
-    font-size: 44px;
-    line-height: 48px;
+  font-size: 44px;
+  line-height: 48px;
 }
 
 @mixin fz40 {
-    font-size: 40px;
-    line-height: 44px;
+  font-size: 40px;
+  line-height: 44px;
 }
 
 @mixin fz32 {
-    font-size: 32px;
-    line-height: 36px;
+  font-size: 32px;
+  line-height: 36px;
 }
 
 @mixin fz28 {
-    font-size: 28px;
-    line-height: 32px;
+  font-size: 28px;
+  line-height: 32px;
 }
 
 @mixin fz20 {
-    font-size: 20px;
-    line-height: 24px;
+  font-size: 20px;
+  line-height: 24px;
 }
 
 @mixin fz18 {
-    font-size: 18px;
-    line-height: 22px;
+  font-size: 18px;
+  line-height: 22px;
 }
 
 @mixin fz16 {
-    font-size: 16px;
-    line-height: 20px;
+  font-size: 16px;
+  line-height: 20px;
 }
 
 @mixin fz14 {
-    font-size: 14px;
-    line-height: 18px;
+  font-size: 14px;
+  line-height: 18px;
 }
 
 @mixin normal400-fz16 {
-    font-style: normal;
-    font-weight: 400;
-    font-size: 16px;
-    line-height: 20px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 20px;
 }
 
-@mixin positionImg{
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
+@mixin positionImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
 }
 
-
-@mixin paginationNumber{
-  @include  flexColumnCenter;
+@mixin paginationNumber {
+  @include flexColumnCenter;
   @include normal400;
   @include fz18;
   width: 38px;
@@ -197,23 +191,23 @@
   }
 }
 
-@mixin scroll{
+@mixin scroll {
   &::-webkit-scrollbar {
     width: 8px;
-    }
-    &::-webkit-scrollbar-track {
-        background: transparent; 
-        border-radius: 4px;
-    }
+  }
+  &::-webkit-scrollbar-track {
+    background: transparent;
+    border-radius: 4px;
+  }
 
-    &::-webkit-scrollbar-thumb {
-        background-color: rgba(0, 0, 0, 0.2); 
-        border-radius: 4px;
-        border: 2px solid transparent; 
-        background-clip: padding-box;
-    }
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 4px;
+    border: 2px solid transparent;
+    background-clip: padding-box;
+  }
 
-    &::-webkit-scrollbar-thumb:hover {
-        background-color: rgba(0, 0, 0, 0.4); 
-    }
+  &::-webkit-scrollbar-thumb:hover {
+    background-color: rgba(0, 0, 0, 0.4);
+  }
 }

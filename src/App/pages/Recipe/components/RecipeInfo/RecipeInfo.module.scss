@@ -16,7 +16,7 @@
   height: 298px;
   border-radius: $border-radius;
 
- @include respondToMedium  {
+  @include respondToMedium {
     width: 48%;
   }
 
@@ -24,7 +24,7 @@
     width: 100%;
   }
 }
-.img{
+.img {
   @include positionImg;
   border-radius: $border-radius;
 }
@@ -44,12 +44,12 @@
     grid-template-columns: 1fr 1fr;
   }
 
-  @include respondToExtraSmall{
+  @include respondToExtraSmall {
     display: grid;
     grid-template-columns: 1fr 1fr;
   }
 
-  @include respondTo250{
+  @include respondTo250 {
     display: grid;
     grid-template-columns: 1fr;
   }
@@ -59,4 +59,3 @@
   @include displayFlexAlignCenterJCcenter;
   flex: 1;
 }
-

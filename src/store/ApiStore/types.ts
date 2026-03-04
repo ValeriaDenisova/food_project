@@ -4,7 +4,7 @@ export const HTTPMethod = {
   POST: 'POST',
 } as const;
 
-export type HTTPMethod = typeof HTTPMethod[keyof typeof HTTPMethod];
+export type HTTPMethod = (typeof HTTPMethod)[keyof typeof HTTPMethod];
 // Параметры запроса
 export type RequestParams<ReqT> = {
   method: HTTPMethod; // Метод запроса, GET или POST
@@ -32,7 +32,7 @@ export const StatusHTTP = {
   UNEXPECTED_ERROR: 'UNEXPECTED ERROR',
 } as const;
 
-export type StatusHTTP = number | typeof StatusHTTP[keyof typeof StatusHTTP];
+export type StatusHTTP = number | (typeof StatusHTTP)[keyof typeof StatusHTTP];
 
 // Ответ API
 export type ApiResponse<SuccessT, ErrorT> =

@@ -8,27 +8,27 @@
   column-gap: 80px;
   min-height: 90vh;
 
-  @include respondToMedium{
+  @include respondToMedium {
     grid-template-columns: 1fr 1fr;
     row-gap: 48px;
     column-gap: 40px;
   }
 
-  @include respondToSmall{
+  @include respondToSmall {
     grid-template-columns: 1fr;
     column-gap: 30px;
   }
 }
 
-.ProductsElementsNull{
+.ProductsElementsNull {
   grid-template-columns: 1fr;
   padding-top: 100px;
-  @include respondToSmall{
+  @include respondToSmall {
     padding-top: 50px;
   }
 }
 
-.recipesNull{
+.recipesNull {
   text-align: center;
   color: $color-placeholder;
   @include fz44;
@@ -38,30 +38,32 @@
   color: $default-color;
 }
 
-.loader{
+.loader {
   display: flex;
   justify-content: center;
   align-items: start;
 }
 
 @keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }
 .loader__svg {
   display: inline-block;
-  animation: spin 1s linear infinite; 
+  animation: spin 1s linear infinite;
 }
 
-
-.arrayTop{
+.arrayTop {
   position: fixed;
   bottom: 50px;
   right: 50px;
   cursor: pointer;
-  @include respondToSmall{
+  @include respondToSmall {
     bottom: 20px;
     right: 20px;
   }
 }
-

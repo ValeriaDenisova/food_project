@@ -23,7 +23,7 @@ const ArrowDownIcon: React.FC<IconProps> = ({
       width={width}
       height={height}
       viewBox={`0 0 ${width} ${height}`}
-      style={{ color: fillColor, ...style }} 
+      style={{ color: fillColor, ...style }}
       fill="none"
       {...props}
     >

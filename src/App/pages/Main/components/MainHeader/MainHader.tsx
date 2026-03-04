@@ -1,6 +1,6 @@
 import React from 'react';
 import mainImage from './images/main.png';
-import recipes from 'components/icons/Recipes.svg'
+import recipes from 'components/icons/Recipes.svg';
 import s from './MainHeader.module.scss';
 
 const MainHeader: React.FC = () => {

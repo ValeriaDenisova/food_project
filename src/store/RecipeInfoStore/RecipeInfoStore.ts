@@ -1,62 +1,77 @@
-import { makeAutoObservable, toJS,  runInAction  } from 'mobx';
-import { normalizeRecipeInfo, type RecipeInfoApi, type RecipeInfoModel, type RecipeInfoParams } from "store/models/api/RecipeInfo";
-import { API_BASE_URL } from 'config/apiConfig'; 
-import ApiStore from 'store/ApiStore'; 
+import { makeAutoObservable, toJS, runInAction, reaction } from 'mobx';
+import { normalizeRecipeInfo, type RecipeInfoApi, type RecipeInfo } from 'entities/api/RecipeInfo';
+import { api } from 'store/ApiStore/ApiStore';
+import ApiStore from 'store/ApiStore';
+import { favorites } from 'store/FavoritesStore';
 
-export default class RecipeInfoStore{
-    recipeInfo: RecipeInfoModel | null = null;
-    loading: boolean = false;
-    error: string | null = null;
+export default class RecipeInfoStore {
+  recipeInfo: RecipeInfo | null = null;
+  loading: boolean = false;
+  error: string | null = null;
+  id: string | undefined;
 
-    private api: ApiStore;
+  private api: ApiStore;
 
-    constructor() {
-        makeAutoObservable(this);
-        this.api = new ApiStore(API_BASE_URL);
-    }
+  constructor(id: string | undefined) {
+    makeAutoObservable(this);
+    this.api = api;
+    this.id = id;
+    reaction(
+      () => this.id,
+      (newId, previousId) => {
+        if (newId !== previousId) {
+          this.fetchRecipes();
+        }
+      }
+    );
 
-    async fetchRecipes(id: string| undefined, params: Partial<RecipeInfoParams>) {
+    this.fetchRecipes();
+  }
 
+  async fetchRecipes() {
+    runInAction(() => {
+      this.recipeInfo = null;
+      this.loading = true;
+      this.error = null;
+    });
+
+    try {
+      const response = await this.api.request<{ data: RecipeInfoApi }>({
+        method: 'GET',
+        endpoint: `/recipes/${this.id}`,
+        headers: {},
+        data: { populate: ['images', 'ingradients', 'equipments', 'directions'] },
+      });
+
+      if (response.success) {
         runInAction(() => {
-            this.recipeInfo = null;
-            this.loading = true;
-            this.error = null;
-         });
-
-        try {
-            const response = await this.api.request<{ data: RecipeInfoApi}>({
-                method: 'GET',
-                endpoint: `/recipes/${id}`,
-                headers: {},
-                data: params,
+          this.recipeInfo = normalizeRecipeInfo(response.data.data);
         });
-
-         if (response.success) {
-            runInAction(() => {
-                this.recipeInfo = normalizeRecipeInfo(response.data.data);
-            });
-        } else {
-            runInAction(() => {
-                this.error = `Ошибка: статус ${response.status}`;
-            });
-        }
-            } catch {
-            runInAction(() => {
-                this.error = 'Ошибка при получении рецептов';
-         });
-            } finally {
-            runInAction(() => {
-                this.loading = false;
-            });
-        }
-
+      } else {
+        runInAction(() => {
+          this.error = `Ошибка: статус ${response.status}`;
+        });
+      }
+    } catch {
+      runInAction(() => {
+        this.error = 'Ошибка при получении рецептов';
+      });
+    } finally {
+      runInAction(() => {
+        this.loading = false;
+      });
     }
+  }
 
-        get cleanRecipeInfo(): RecipeInfoModel | null {
-            return toJS(this.recipeInfo);
-        }
+  get cleanRecipeInfo(): RecipeInfo | null {
+    return toJS(this.recipeInfo);
+  }
 
-        get cleanLoading(): boolean {
-            return this.loading;
-        }
-    }
+  get cleanLoading(): boolean {
+    return this.loading;
+  }
+
+  get isFavorite(): boolean {
+    return favorites.cleanRecipes.some((item) => item.documentId === this.id);
+  }
+}
