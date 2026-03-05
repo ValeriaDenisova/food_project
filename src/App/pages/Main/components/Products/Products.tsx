@@ -6,12 +6,24 @@ import Card from 'components/Card';
 import Text from 'components/Text';
 import Loader from 'components/Loader';
 import arrayTop from 'components/icons/arrayTop.svg';
-import { resipes } from 'store/RecipeStore';
-import ScrollStore from 'store/ScrollStore';
+import { useRecipeStore } from 'store/hooks/globalStores';
+import ScrollStore from 'store/locals/ScrollStore';
+import { smoothScrollTo } from 'utils/utils';
 import s from './Products.module.scss';
 
 const Products: React.FC = observer(() => {
-  const scrollPositionRef = useRef(0);
+  const resipes = useRecipeStore();
+  const scrollPositionRef = useRef<number>(0);
+  const scrollStoreRef = useRef<ScrollStore | null>(null);
+
+  useEffect(() => {
+    scrollStoreRef.current = new ScrollStore(scrollPositionRef);
+
+    return () => {
+      scrollStoreRef.current?.destroy();
+      scrollStoreRef.current = null;
+    };
+  }, []);
 
   useEffect(() => {
     if (scrollPositionRef.current !== 0) {
@@ -19,24 +31,11 @@ const Products: React.FC = observer(() => {
     }
   }, [resipes.cleanRecipes]);
 
-  const scrollStoreRef = useRef<ScrollStore | null>(null);
-
-  if (!scrollStoreRef.current) {
-    scrollStoreRef.current = new ScrollStore(scrollPositionRef);
-  }
-
-  useEffect(() => {
-    return () => {
-      scrollStoreRef.current?.destroy();
-    };
-  }, []);
-
   const [isArray, setIsArray] = useState<boolean>(false);
 
   const handleArray = useCallback(() => {
-    resipes.setPageSize(9);
-    window.scrollTo(0, 0);
-  }, []);
+    smoothScrollTo(500);
+  }, [resipes]);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -98,4 +97,4 @@ const Products: React.FC = observer(() => {
   );
 });
 
-export default React.memo(Products);
+export default Products;

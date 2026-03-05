@@ -3,12 +3,13 @@ import { observer } from 'mobx-react-lite';
 import Input from 'components/Input';
 import Button from 'components/Button';
 import Text from 'components/Text';
-import { user } from 'store/UserStore';
+import { useUserStore } from 'store/hooks/globalStores';
 import s from './SingInTo.module.scss';
 
 const SingInTo: React.FC = observer(() => {
   const [login, setLogin] = React.useState('');
   const [password, setPassword] = React.useState('');
+  const user = useUserStore();
 
   return (
     <>
@@ -48,4 +49,4 @@ const SingInTo: React.FC = observer(() => {
   );
 });
 
-export default React.memo(SingInTo);
+export default SingInTo;

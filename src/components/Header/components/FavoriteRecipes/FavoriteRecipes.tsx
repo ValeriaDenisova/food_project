@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { observer } from 'mobx-react-lite';
 import parse from 'html-react-parser';
 import { Link } from 'react-router-dom';
 import Card from 'components/Card';
 import Text from 'components/Text';
 import Loader from 'components/Loader';
-import { user } from 'store/UserStore';
-import { favorites } from 'store/FavoritesStore';
+import { favorites } from 'store/globals/FavoritesStore';
+import { useUserStore } from 'store/hooks/globalStores';
 import s from './FavoriteRecipes.module.scss';
 
 interface FavoriteRecipesProps {
@@ -14,6 +14,7 @@ interface FavoriteRecipesProps {
 }
 
 const FavoriteRecipes: React.FC<FavoriteRecipesProps> = observer(({ onFavoriteClose }) => {
+  const user = useUserStore();
   return (
     <>
       {favorites.cleanLoading && (
@@ -56,4 +57,4 @@ const FavoriteRecipes: React.FC<FavoriteRecipesProps> = observer(({ onFavoriteCl
   );
 });
 
-export default React.memo(FavoriteRecipes);
+export default FavoriteRecipes;

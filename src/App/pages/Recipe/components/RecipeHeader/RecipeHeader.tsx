@@ -1,28 +1,25 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { observer } from 'mobx-react-lite';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import Text from 'components/Text';
 import array from 'components/icons/recipe_header.svg';
 import Button from 'components/Button';
-import { favorites } from 'store/FavoritesStore';
-import { user } from 'store/UserStore';
-import RecipeInfoStore from 'store/RecipeInfoStore';
+import { favorites } from 'store/globals/FavoritesStore';
+import { useUserStore } from 'store/hooks/globalStores';
+import RecipeInfoStore from 'store/locals/RecipeInfoStore';
 import s from './RecipeHeader.module.scss';
 
 interface RecipeHeaderProps {
   loading: boolean;
+  info: RecipeInfoStore;
 }
 
-const RecipeHeader: React.FC<RecipeHeaderProps> = observer(({ loading }) => {
+const RecipeHeader: React.FC<RecipeHeaderProps> = observer(({ loading, info }) => {
   const params = useParams<{ id: string }>();
   const id = params.id;
-  const [info, setInfo] = useState(() => new RecipeInfoStore(id));
-  useEffect(() => {
-    const newStore = new RecipeInfoStore(id);
-    setInfo(newStore);
-  }, [id]);
 
+  const user = useUserStore();
   return (
     <div className={s.resipeHeader}>
       <div className={s.resipeHeader__left}>
@@ -31,7 +28,7 @@ const RecipeHeader: React.FC<RecipeHeaderProps> = observer(({ loading }) => {
             <img src={array} alt="" />
           </div>
         </Link>
-        <Text className={s.title}>Pancake Breakfast Casserole</Text>
+        <Text className={s.title}>{info.cleanRecipeInfo?.name}</Text>
       </div>
       {!loading && user.hasToken && !info.isFavorite && (
         <Button
@@ -57,4 +54,4 @@ const RecipeHeader: React.FC<RecipeHeaderProps> = observer(({ loading }) => {
   );
 });
 
-export default React.memo(RecipeHeader);
+export default RecipeHeader;

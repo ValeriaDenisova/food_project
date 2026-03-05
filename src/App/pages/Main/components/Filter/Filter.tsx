@@ -7,13 +7,14 @@ import MultiDropdown from 'components/MultiDropdown';
 import search from 'components/icons/search.svg';
 import slot from 'components/icons/slot.svg';
 import clear from 'components/icons/clear.svg';
-import { categories } from 'store/CategoriesStore';
-import { resipes } from 'store/RecipeStore';
+import { useCategoriesStore, useRecipeStore } from 'store/hooks/globalStores';
 import type { Option } from 'components/MultiDropdown/MultiDropdown';
 import { handleTitle } from 'utils/utils';
 import s from './Filter.module.scss';
 
 const Filter: React.FC = observer(() => {
+  const resipes = useRecipeStore();
+  const categories = useCategoriesStore();
   const [tempSearch, setTempSearch] = React.useState(resipes.getSearch);
   const [categoriesFilter, setCategoriesFilter] = React.useState<Option[]>([]);
   const [isOpen, setIsOpen] = React.useState<boolean>(false);
@@ -116,4 +117,4 @@ const Filter: React.FC = observer(() => {
   );
 });
 
-export default React.memo(Filter);
+export default Filter;

@@ -1,8 +1,7 @@
 import { makeAutoObservable, toJS, runInAction, reaction } from 'mobx';
 import { normalizeRecipe, type RecipeApi, type Recipe } from 'entities/api/Recipe';
-import { api } from 'store/ApiStore/ApiStore';
+import type { IRootStore } from '../root/RootStore';
 import type { Option } from 'components/MultiDropdown/MultiDropdown';
-import ApiStore from 'store/ApiStore';
 
 const PAGE_SIZE = 9;
 
@@ -18,11 +17,11 @@ export default class RecipeStore {
   search: string = '';
   loadedTotal: number | undefined;
 
-  private api: ApiStore;
+  private _rootStore: IRootStore;
 
-  constructor() {
+  constructor(root: IRootStore) {
     makeAutoObservable(this);
-    this.api = api;
+    this._rootStore = root;
     const urlParams = new URLSearchParams(window.location.search);
     const searchParam = urlParams.get('search');
     if (searchParam) {
@@ -50,15 +49,8 @@ export default class RecipeStore {
       }
     );
 
-    this.fetchRecipes();
     reaction(
-      () => this.page,
-      () => {
-        this.fetchRecipes();
-      }
-    );
-    reaction(
-      () => this.pageSize,
+      () => [this.page, this.pageSize, this.filtersCategoryParam, this.search] as const,
       () => {
         this.fetchRecipes();
       }
@@ -67,14 +59,12 @@ export default class RecipeStore {
       () => this.filtersCategoryParam,
       () => {
         this.pageSize = PAGE_SIZE;
-        this.fetchRecipes();
       }
     );
     reaction(
       () => this.search,
       () => {
         this.pageSize = PAGE_SIZE;
-        this.fetchRecipes();
       }
     );
   }
@@ -88,7 +78,7 @@ export default class RecipeStore {
     });
 
     try {
-      const response = await this.api.request<{
+      const response = await this._rootStore.api.request<{
         data: RecipeApi[];
         meta: { pagination: { total: number } };
       }>({
@@ -184,8 +174,8 @@ export default class RecipeStore {
 
   paramSearch = () => {
     const params = new URLSearchParams(window.location.search);
-    if (resipes.getSearch) {
-      params.set('search', resipes.getSearch);
+    if (this.getSearch) {
+      params.set('search', this.getSearch);
     } else {
       params.delete('search');
     }
@@ -197,5 +187,3 @@ export default class RecipeStore {
     this.filtersCategoryParam = this.filtersCategory.map((option) => option.key);
   };
 }
-
-export const resipes = new RecipeStore();

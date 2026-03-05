@@ -1,20 +1,22 @@
 import { makeAutoObservable, toJS, runInAction, reaction } from 'mobx';
 import { normalizeRecipeInfo, type RecipeInfoApi, type RecipeInfo } from 'entities/api/RecipeInfo';
-import { api } from 'store/ApiStore/ApiStore';
-import ApiStore from 'store/ApiStore';
-import { favorites } from 'store/FavoritesStore';
+import { rootStore, RootStore } from 'store/globals/root/RootStore';
+import { favorites } from 'store/globals/FavoritesStore';
+import type { ILocalStore } from 'entities/ILocalStore';
 
-export default class RecipeInfoStore {
+export default class RecipeInfoStore implements ILocalStore {
   recipeInfo: RecipeInfo | null = null;
   loading: boolean = false;
   error: string | null = null;
   id: string | undefined;
 
-  private api: ApiStore;
+  private _rootStore: RootStore;
+
+  private _isDestroyed = false;
 
   constructor(id: string | undefined) {
     makeAutoObservable(this);
-    this.api = api;
+    this._rootStore = rootStore;
     this.id = id;
     reaction(
       () => this.id,
@@ -28,7 +30,19 @@ export default class RecipeInfoStore {
     this.fetchRecipes();
   }
 
+  private resetState() {
+    this.recipeInfo = null;
+    this.loading = false;
+    this.error = null;
+  }
+
+  destroy(): void {
+    this._isDestroyed = true;
+    this.resetState();
+  }
+
   async fetchRecipes() {
+    if (this._isDestroyed) return;
     runInAction(() => {
       this.recipeInfo = null;
       this.loading = true;
@@ -36,7 +50,7 @@ export default class RecipeInfoStore {
     });
 
     try {
-      const response = await this.api.request<{ data: RecipeInfoApi }>({
+      const response = await this._rootStore.api.request<{ data: RecipeInfoApi }>({
         method: 'GET',
         endpoint: `/recipes/${this.id}`,
         headers: {},

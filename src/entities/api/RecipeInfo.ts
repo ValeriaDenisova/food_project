@@ -11,6 +11,7 @@ export interface RecipeInfoApi {
   servings: number;
   rating: number;
   summary: string;
+  name: string;
   images: {
     url: string;
   }[];
@@ -42,6 +43,7 @@ export interface RecipeInfo {
   rating: number;
   summary: string;
   images: string;
+  name: string;
   ingradients: {
     id: number;
     name: string;
@@ -73,5 +75,6 @@ export const normalizeRecipeInfo = (from: RecipeInfoApi): RecipeInfo => {
     ingradients: from.ingradients,
     equipments: from.equipments,
     directions: from.directions,
+    name: from.name,
   };
 };

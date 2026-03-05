@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { useParams } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import parse from 'html-react-parser';
@@ -8,19 +8,14 @@ import RecipeDescription from './components/RecipeDescription';
 import IngredientsEquipment from './components/IngredientsEquipment';
 import Directions from './components/Directions';
 import Loader from 'components/Loader';
-import RecipeInfoStore from 'store/RecipeInfoStore';
+import RecipeInfoStore from 'store/locals/RecipeInfoStore';
+import { useLocalStore } from 'store/hooks/useLocalStore';
 import s from './Recipe.module.scss';
 
 const Recipe: React.FC = observer(() => {
   const params = useParams<{ id: string }>();
   const id = params.id;
-
-  const [info, setInfo] = useState(() => new RecipeInfoStore(id));
-
-  useEffect(() => {
-    const newStore = new RecipeInfoStore(id);
-    setInfo(newStore);
-  }, [id]);
+  const info = useLocalStore(() => new RecipeInfoStore(id));
 
   return (
     <div className="wrapper">
@@ -31,7 +26,7 @@ const Recipe: React.FC = observer(() => {
       )}
       {!info.cleanLoading && (
         <div className={s.recipe}>
-          <RecipeHeader loading={info.cleanLoading} />
+          <RecipeHeader loading={info.cleanLoading} info={info} />
           <div className={s.recipe__content}>
             {info.cleanRecipeInfo && (
               <RecipeInfo
@@ -61,4 +56,4 @@ const Recipe: React.FC = observer(() => {
   );
 });
 
-export default React.memo(Recipe);
+export default Recipe;

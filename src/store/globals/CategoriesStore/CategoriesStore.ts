@@ -1,18 +1,17 @@
 import { makeAutoObservable, runInAction, toJS } from 'mobx';
 import { normalizeCategories, type CategoriesApi, type Categories } from 'entities/api/Categories';
-import ApiStore from 'store/ApiStore';
-import { api } from 'store/ApiStore/ApiStore';
+import type { IRootStore } from '../root/RootStore';
 
 export default class CategoriesStore {
   categories: CategoriesApi[] = [];
   loading: boolean = false;
   error: string | null = null;
 
-  private api: ApiStore;
+  private _rootStore: IRootStore;
 
-  constructor() {
+  constructor(root: IRootStore) {
     makeAutoObservable(this);
-    this.api = api;
+    this._rootStore = root;
     this.fetchRecipes();
   }
 
@@ -24,7 +23,7 @@ export default class CategoriesStore {
     });
 
     try {
-      const response = await this.api.request<{ data: CategoriesApi[] }>({
+      const response = await this._rootStore.api.request<{ data: CategoriesApi[] }>({
         method: 'GET',
         endpoint: `/meal-categories`,
         headers: {},
@@ -59,5 +58,3 @@ export default class CategoriesStore {
     return toJS(this.loading);
   }
 }
-
-export const categories = new CategoriesStore();

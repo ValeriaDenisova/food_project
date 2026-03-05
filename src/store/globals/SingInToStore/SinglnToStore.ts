@@ -5,19 +5,18 @@ import {
   type SingInToHead,
   type SingInTo,
 } from 'entities/api/SingInTo';
-import { API_BASE_URL } from 'config/apiConfig';
-import ApiStore from 'store/ApiStore';
+import type { IRootStore } from '../root/RootStore';
 
 export default class SingInToStore {
   data: SingInTo | null = null;
   loading: boolean = false;
   error: string | null = null;
 
-  private api: ApiStore;
+  private _rootStore: IRootStore;
 
-  constructor() {
+  constructor(root: IRootStore) {
     makeAutoObservable(this);
-    this.api = new ApiStore(API_BASE_URL);
+    this._rootStore = root;
   }
 
   async fetchRecipes(head: Partial<SingInToHead>) {
@@ -28,7 +27,7 @@ export default class SingInToStore {
     });
 
     try {
-      const response = await this.api.request<SingInToApi>({
+      const response = await this._rootStore.api.request<SingInToApi>({
         method: 'POST',
         endpoint: '/auth/local',
         headers: {},

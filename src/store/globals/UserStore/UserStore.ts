@@ -1,26 +1,27 @@
 import { runInAction, makeAutoObservable } from 'mobx';
-import SingInToStore from 'store/SingInToStore';
+import type { IRootStore } from '../root/RootStore';
 
 export default class UserStore {
   token: string | null;
-  singInToStore: SingInToStore;
   username: string | undefined = undefined;
 
-  constructor() {
+  private _rootStore: IRootStore;
+
+  constructor(root: IRootStore) {
     makeAutoObservable(this);
     this.token = localStorage.getItem('token');
-    this.singInToStore = new SingInToStore();
+    this._rootStore = root;
   }
 
-  entrance = async (login?: string, password?: string) => {
-    await this.singInToStore.fetchRecipes({ identifier: login, password });
+  async entrance(login?: string, password?: string) {
+    await this._rootStore.singInToStore.fetchRecipes({ identifier: login, password });
     runInAction(() => {
-      const user = this.singInToStore.cleanSingInToUser;
+      const user = this._rootStore.singInToStore.cleanSingInToUser;
       this.token = user?.jwt ?? null;
       this.username = user?.user.username;
       if (this.token) localStorage.setItem('token', this.token);
     });
-  };
+  }
 
   exit = () => {
     this.token = null;
@@ -41,8 +42,6 @@ export default class UserStore {
   }
 
   get isError(): boolean {
-    return typeof this.singInToStore.cleanSingInToError == 'string';
+    return typeof this._rootStore.singInToStore.cleanSingInToError == 'string';
   }
 }
-
-export const user = new UserStore();

@@ -1,7 +1,7 @@
 import { runInAction, makeAutoObservable, toJS, reaction } from 'mobx';
 import { normalizeFavorites, type FavoritesApi, type Favorites } from 'entities/api/Favorites';
-import { api } from 'store/ApiStore/ApiStore';
-import ApiStore from 'store/ApiStore';
+import ApiStore from '../ApiStore';
+import { API_BASE_URL } from 'config/apiConfig';
 
 export default class FavoritesStore {
   recipes: Favorites[] = [];
@@ -11,11 +11,11 @@ export default class FavoritesStore {
   delete: boolean = false;
   token: string | null = null;
 
-  private api: ApiStore;
+  private apiWithAuth: ApiStore;
 
   constructor() {
     makeAutoObservable(this);
-    this.api = api;
+    this.apiWithAuth = new ApiStore(API_BASE_URL, () => localStorage.getItem('token'));
     this.token = localStorage.getItem('token');
     reaction(
       () => this.token,
@@ -36,12 +36,9 @@ export default class FavoritesStore {
     });
 
     try {
-      const response = await this.api.request<FavoritesApi[]>({
+      const response = await this.apiWithAuth.requestWithAuth<FavoritesApi[]>({
         method: 'GET',
         endpoint: '/favorites',
-        headers: {
-          Authorization: `Bearer ${this.token}`,
-        },
         data: {},
       });
 
@@ -73,12 +70,9 @@ export default class FavoritesStore {
     });
 
     try {
-      const response = await this.api.request({
+      const response = await this.apiWithAuth.requestWithAuth<unknown>({
         method: 'POST',
         endpoint: `/favorites/add`,
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
         data: { recipe: id },
       });
 
@@ -111,12 +105,9 @@ export default class FavoritesStore {
     });
 
     try {
-      const response = await this.api.request({
+      const response = await this.apiWithAuth.requestWithAuth<unknown>({
         method: 'POST',
         endpoint: `/favorites/remove`,
-        headers: {
-          Authorization: `Bearer ${localStorage.getItem('token')}`,
-        },
         data: { recipe: id },
       });
 
