@@ -6,7 +6,7 @@
   gap: 19px;
   margin-bottom: 20px;
 
-  @include respondToExtraSmall{
+  @include respondToExtraSmall {
     width: 98%;
     grid-template-columns: 1fr;
   }
@@ -16,14 +16,18 @@
   display: flex;
   justify-content: flex-end;
 
-  @include respondToExtraSmall{
+  @include respondToExtraSmall {
     display: block;
   }
 }
 
-
-.filter{
- @include respondTo250{
+.filter {
+  @include respondTo250 {
     display: none;
   }
+}
+
+.categoriesFilter__slot {
+  display: flex;
+  gap: 10px;
 }

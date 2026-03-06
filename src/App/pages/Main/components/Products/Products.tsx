@@ -1,37 +1,100 @@
-import React from 'react';
+import React, { useRef, useEffect, useCallback, useState } from 'react';
 import { Link } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
 import parse from 'html-react-parser';
 import Card from 'components/Card';
-import type { Product } from '../../../../../hooks/useProducts/type';
+import Text from 'components/Text';
+import Loader from 'components/Loader';
+import arrayTop from 'components/icons/arrayTop.svg';
+import { useRecipeStore } from 'store/hooks/globalStores';
+import ScrollStore from 'store/locals/ScrollStore';
+import { smoothScrollTo } from 'utils/utils';
 import s from './Products.module.scss';
 
-interface ProductsProps {
-  data: Product[];
-}
+const Products: React.FC = observer(() => {
+  const resipes = useRecipeStore();
+  const scrollPositionRef = useRef<number>(0);
+  const scrollStoreRef = useRef<ScrollStore | null>(null);
 
-const Products: React.FC<ProductsProps> = ({ data }) => {
+  useEffect(() => {
+    scrollStoreRef.current = new ScrollStore(scrollPositionRef);
+
+    return () => {
+      scrollStoreRef.current?.destroy();
+      scrollStoreRef.current = null;
+    };
+  }, []);
+
+  useEffect(() => {
+    if (scrollPositionRef.current !== 0) {
+      window.scrollTo({ top: scrollPositionRef.current, behavior: 'auto' });
+    }
+  }, [resipes.cleanRecipes]);
+
+  const [isArray, setIsArray] = useState<boolean>(false);
+
+  const handleArray = useCallback(() => {
+    smoothScrollTo(500);
+  }, [resipes]);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      const scrollPosition = window.scrollY;
+      const triggerPosition = 2500;
+
+      if (scrollPosition > triggerPosition) {
+        setIsArray(true);
+      } else {
+        setIsArray(false);
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll);
+
+    return () => {
+      window.removeEventListener('scroll', handleScroll);
+    };
+  }, []);
+
   return (
-    <div className={s.ProductsElements}>
-      {data?.map((item, index) => {
-        const cleanedSummary = item.summary
-          .replace(/<a[^>]*>(.*?)<\/a>/g, '<span>$1</span>')
-          .replace(/<p[^>]*>(.*?)<\/p>/g, '<div>$1</div>');
-
-        const cleanedName = item.name.replace(/<p[^>]*>(.*?)<\/p>/g, '<span>$1</span>');
-
-        return (
-          <Link key={index} to={`/${item.documentId}`} style={{ textDecoration: 'none' }}>
-            <Card
-              image={item.images[0].url}
-              title={parse(cleanedName)}
-              subtitle={parse(cleanedSummary)}
-              contentSlot={<p className={s.slot}>{item.calories} kcal</p>}
-            />
-          </Link>
-        );
-      })}
-    </div>
+    <>
+      <div
+        className={`${s.ProductsElements} ${resipes.cleanRecipes.length === 0 || resipes.cleanRecipesLoading ? s.ProductsElementsNull : ''}`}
+      >
+        {resipes.cleanRecipesLoading && (
+          <div className={s.loader}>
+            <Loader className={s.loader__svg} />
+          </div>
+        )}
+        {!resipes.cleanRecipesLoading && resipes.cleanRecipes.length === 0 && (
+          <Text className={s.recipesNull}>
+            According to these parameters, no recipes were found
+          </Text>
+        )}
+        {!resipes.cleanRecipesLoading &&
+          resipes.cleanRecipes.map((item, index) => {
+            const cleanedSummary = item.summary
+              .replace(/<a[^>]*>(.*?)<\/a>/g, '<span>$1</span>')
+              .replace(/<p[^>]*>(.*?)<\/p>/g, '<div>$1</div>');
+            return (
+              <Link key={index} to={`/${item.documentId}`} style={{ textDecoration: 'none' }}>
+                <Card
+                  image={item.images}
+                  title={item.name}
+                  subtitle={parse(cleanedSummary)}
+                  contentSlot={<p className={s.slot}>{item.calories} kcal</p>}
+                />
+              </Link>
+            );
+          })}
+        {isArray && (
+          <div className={s.arrayTop}>
+            <img src={arrayTop} alt="" onClick={handleArray} />
+          </div>
+        )}
+      </div>
+    </>
   );
-};
+});
 
-export default React.memo(Products);
+export default Products;

@@ -2,18 +2,9 @@ import React from 'react';
 import Subtitle from '../Subtitle';
 import Filter from '../Filter';
 import Products from '../Products';
-import Pagination from '../Pagination';
-import type { Product } from '../../../../../hooks/useProducts/type';
 import s from './Recipes.module.scss';
 
-interface RecipesProps {
-  numberStarlings: number;
-  page: number;
-  onPage: (value: number) => void;
-  data: Product[];
-}
-
-const Recipes: React.FC<RecipesProps> = ({ numberStarlings, page, onPage, data }) => {
+const Recipes: React.FC = () => {
   return (
     <div className={s.recipes}>
       <Subtitle
@@ -22,8 +13,7 @@ const Recipes: React.FC<RecipesProps> = ({ numberStarlings, page, onPage, data }
         }
       />
       <Filter />
-      <Products data={data} />
-      <Pagination numberStarlings={numberStarlings} active={page} onPage={onPage} />
+      <Products />
     </div>
   );
 };

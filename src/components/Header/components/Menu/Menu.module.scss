@@ -14,15 +14,15 @@
   display: flex;
   gap: 16px;
 
-  @include respondToMedium{
+  @include respondToMedium {
     gap: 10px;
   }
 
- @include respondToNoneSmall;
+  @include respondToNoneSmall;
 }
 
-.menu__mobile{
-  @include respondToSmall{
+.menu__mobile {
+  @include respondToSmall {
     background-color: $color-header-menu;
     position: fixed;
     width: 100vw;
@@ -31,13 +31,10 @@
     padding-bottom: 40px;
     gap: 20px;
   }
-
 }
 
-.menu__open{
-   @include respondToSmall{
+.menu__open {
+  @include respondToSmall {
     @include flexColumnCenter;
   }
 }
-
-

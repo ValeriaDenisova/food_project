@@ -1,47 +1,59 @@
 import React from 'react';
 import { useParams } from 'react-router-dom';
+import { observer } from 'mobx-react-lite';
 import parse from 'html-react-parser';
 import RecipeHeader from './components/RecipeHeader';
 import RecipeInfo from './components/RecipeInfo';
 import RecipeDescription from './components/RecipeDescription';
 import IngredientsEquipment from './components/IngredientsEquipment';
 import Directions from './components/Directions';
-import { useProductsInfo } from 'hooks/useProductInfo/useProductInfo';
+import Loader from 'components/Loader';
+import RecipeInfoStore from 'store/locals/RecipeInfoStore';
+import { useLocalStore } from 'store/hooks/useLocalStore';
 import s from './Recipe.module.scss';
 
-const Recipe: React.FC = () => {
+const Recipe: React.FC = observer(() => {
   const params = useParams<{ id: string }>();
   const id = params.id;
-  const { product } = useProductsInfo(id);
+  const info = useLocalStore(() => new RecipeInfoStore(id));
 
   return (
     <div className="wrapper">
-      <div className={s.recipe}>
-        <RecipeHeader />
-        <div className={s.recipe__content}>
-          {product && (
-            <RecipeInfo
-              cookingTime={product.data.cookingTime}
-              preparationTime={product.data.preparationTime}
-              totalTime={product.data.totalTime}
-              likes={product.data.likes}
-              serving={product.data.servings}
-              rating={product.data.rating}
-              img={product.data.images[0].url}
-            />
-          )}
-          {product && <RecipeDescription text={parse(product.data.summary)} />}
-          {product && (
-            <IngredientsEquipment
-              ingradients={product.data.ingradients}
-              equipments={product.data.equipments}
-            />
-          )}
-          {product && <Directions directions={product.data.directions} />}
+      {info.cleanLoading && (
+        <div className={s.loader}>
+          <Loader className={s.loader__svg} />
         </div>
-      </div>
+      )}
+      {!info.cleanLoading && (
+        <div className={s.recipe}>
+          <RecipeHeader loading={info.cleanLoading} info={info} />
+          <div className={s.recipe__content}>
+            {info.cleanRecipeInfo && (
+              <RecipeInfo
+                cookingTime={info.cleanRecipeInfo.cookingTime}
+                preparationTime={info.cleanRecipeInfo.preparationTime}
+                totalTime={info.cleanRecipeInfo.totalTime}
+                likes={info.cleanRecipeInfo.likes}
+                serving={info.cleanRecipeInfo.servings}
+                rating={info.cleanRecipeInfo.rating}
+                img={info.cleanRecipeInfo.images}
+              />
+            )}
+            {info.cleanRecipeInfo && (
+              <RecipeDescription text={parse(info.cleanRecipeInfo.summary)} />
+            )}
+            {info.cleanRecipeInfo && (
+              <IngredientsEquipment
+                ingradients={info.cleanRecipeInfo.ingradients}
+                equipments={info.cleanRecipeInfo.equipments}
+              />
+            )}
+            {info.cleanRecipeInfo && <Directions directions={info.cleanRecipeInfo.directions} />}
+          </div>
+        </div>
+      )}
     </div>
   );
-};
+});
 
-export default React.memo(Recipe);
+export default Recipe;

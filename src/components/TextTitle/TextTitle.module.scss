@@ -2,8 +2,8 @@
 @use 'styles/mixins' as *;
 
 .title {
-  @include  normal600;
-  @include  fz20;
+  @include normal600;
+  @include fz20;
   color: $color-black;
   margin-bottom: 24px;
 }

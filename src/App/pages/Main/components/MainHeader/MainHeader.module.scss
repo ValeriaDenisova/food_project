@@ -5,11 +5,11 @@
   background-color: rgb(202, 123, 123);
   position: relative;
 
-  @include respondToSmall{
+  @include respondToSmall {
     height: 400px;
   }
 
-  @include respondToExtraSmall{
+  @include respondToExtraSmall {
     height: 200px;
   }
 }
@@ -25,11 +25,10 @@
   @include positionImg;
 }
 
-.title__svg{
+.title__svg {
   @include respondToExtraSmall {
     width: 100%;
     height: auto;
     display: block;
   }
 }
-

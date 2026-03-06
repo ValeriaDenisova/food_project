@@ -17,7 +17,10 @@
 .header__entrance {
   @include displayFlexAlignCenter;
   gap: 17px;
-  @include respondToNoneSmall;
+
+  @include respondToSmall {
+    gap: 10px;
+  }
 }
 
 .logo__text {
@@ -35,18 +38,18 @@
   @include displayFlexAlignCenter;
   gap: 80px;
 
-  @include respondToMedium{
+  @include respondToMedium {
     gap: 30px;
   }
 }
 
 .burger {
   display: none;
-  cursor: pointer; 
-  width: 30px; 
-  height: 24px; 
+  cursor: pointer;
+  width: 30px;
+  height: 24px;
 
-  @include respondToSmall{
+  @include respondToSmall {
     @include flexColumn;
     justify-content: space-between;
   }
@@ -55,8 +58,12 @@
 .burger__line {
   width: 100%;
   height: 3px;
-  background-color: #333; 
-  border-radius: 2px; 
+  background-color: $color-burger;
+  border-radius: 2px;
   transition: all 0.3s ease;
 }
 
+.header__right {
+  @include displayFlexAlignCenter;
+  gap: 15px;
+}

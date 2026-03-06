@@ -16,21 +16,17 @@ const Pagination: React.FC<PaginationProps> = ({ numberStarlings, active, onPage
   if (numberStarlings <= 1) return <></>;
 
   const pages = getPages(numberStarlings, active);
-  
+
   return (
     <div className={s.pagination}>
       <div className="arrayLeft" onClick={() => onPage(active > 1 ? active - 1 : active)}>
-        {active == 1 ? (<img src={leftBlock} alt=""/>) : (<img src={left} alt=""/>)}
+        {active == 1 ? <img src={leftBlock} alt="" /> : <img src={left} alt="" />}
       </div>
       <div className={s.pagination__number}>
         {pages.map((page: number | string, idx: number) => {
           if (page === '...') {
             return (
-              <div
-                key={`dots-${idx}`}
-                className={s.numberPages}
-                style={{ cursor: 'default' }}
-              >
+              <div key={`dots-${idx}`} className={s.numberPages} style={{ cursor: 'default' }}>
                 ...
               </div>
             );
@@ -52,7 +48,7 @@ const Pagination: React.FC<PaginationProps> = ({ numberStarlings, active, onPage
         className="arrayRight"
         onClick={() => onPage(active < numberStarlings ? active + 1 : active)}
       >
-        {active == numberStarlings ? (<img src={rightBlock} alt=''/>) : (<img src={right} alt=""/>)}
+        {active == numberStarlings ? <img src={rightBlock} alt="" /> : <img src={right} alt="" />}
       </div>
     </div>
   );

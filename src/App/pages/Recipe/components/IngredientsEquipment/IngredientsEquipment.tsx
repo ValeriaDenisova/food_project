@@ -2,8 +2,8 @@ import React from 'react';
 import IngredientsEquipmentContainer from './components/IngredientsEquipmentContainer';
 import IngredientsEquipmentElement from './components/IngredientsEquipmentContainer/components/IngredientsEquipmenElement';
 import IngredientsEquipmentSeparator from './components/IngredientsEquipmentSeparator';
-import ingredientsSvg from "components/icons/ingredients.svg";
-import equipmentSvg from "components/icons/equipment.svg";
+import ingredientsSvg from 'components/icons/ingredients.svg';
+import equipmentSvg from 'components/icons/equipment.svg';
 import s from './IngredientsEquipment.module.scss';
 
 interface IngredientsEquipmentProps {
@@ -29,7 +29,7 @@ const IngredientsEquipment: React.FC<IngredientsEquipmentProps> = ({ ingradients
           ingradients?.map((ingradient) => (
             <IngredientsEquipmentElement
               key={ingradient.id}
-              svg={<img src={ingredientsSvg} alt=""/>}
+              svg={<img src={ingredientsSvg} alt="" />}
               text={`${ingradient.amount} ${ingradient.name}`}
             />
           )),
@@ -43,7 +43,7 @@ const IngredientsEquipment: React.FC<IngredientsEquipmentProps> = ({ ingradients
           equipments?.map((equipment) => (
             <IngredientsEquipmentElement
               key={equipment.id}
-              svg={<img src={equipmentSvg} alt=""/>}
+              svg={<img src={equipmentSvg} alt="" />}
               text={equipment.name}
             />
           )),

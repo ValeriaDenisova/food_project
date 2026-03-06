@@ -24,7 +24,7 @@ const CheckIcon: React.FC<IconProps> = ({
       width={width}
       height={height}
       viewBox={`0 0 24 24`}
-      style={{ color: fillColor, ...style }} 
+      style={{ color: fillColor, ...style }}
       fill="none"
       {...props}
     >

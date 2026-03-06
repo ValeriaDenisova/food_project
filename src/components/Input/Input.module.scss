@@ -15,14 +15,13 @@
   border-radius: $border-radius;
 
   @include respondToFullWidthSmall;
-
 }
 
 .input {
   border: none;
   outline: none;
   flex: 1;
-  min-width: 200px;
+  width: 100%;
   @include normal400-fz16;
   color: $color-black;
 }
@@ -53,4 +52,3 @@ input::placeholder {
   background: $background-white;
   border: 1px solid $default-color;
 }
-

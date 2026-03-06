@@ -5,11 +5,11 @@
   @include displayFlexAlignCenterJCcenter;
   gap: 15px;
 
-  @include respondTo390{
+  @include respondTo390 {
     gap: 0px;
   }
 
-  @include respondTo320{
+  @include respondTo320 {
     gap: 5px;
   }
 }
@@ -19,17 +19,17 @@
 }
 
 .numberPages {
-  @include  paginationNumber;
-  
+  @include paginationNumber;
+
   color: $color-black;
 
   @include respondTo320 {
-     display: none;
+    display: none;
   }
 }
 
 .active {
-  @include  paginationNumber;
+  @include paginationNumber;
 
   background: $default-color;
   color: $background-white;
@@ -37,6 +37,3 @@
   order: 0;
   flex-grow: 1;
 }
-
-
-
